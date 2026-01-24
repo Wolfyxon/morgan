@@ -1,0 +1,7 @@
+morgan
+a.out
+
+*.exe
+*.obj
+*.d
+*.o
