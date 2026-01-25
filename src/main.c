@@ -20,10 +20,16 @@ void main(int argc, char** argv) {
 
         printf("Key %d %d from %d \n", key_ev.key, key_ev.pressed, key_ev.device);
 
+        int note = key_to_note(key_ev.key);
+
+        if(note == 0) {
+            continue;
+        }
+
         if(key_ev.pressed) {
-            midi_note_on(60, 50);
+            midi_note_on(note, 50);
         } else {
-            midi_note_off(60, 50);
+            midi_note_off(note, 50);
         }
     }
 }

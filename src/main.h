@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "defines.h"
+#include "utils.h"
 #include "input.h"
 #include "midi.h"
 
