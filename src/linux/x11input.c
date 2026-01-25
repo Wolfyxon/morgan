@@ -2,7 +2,9 @@
 
 // TODO: Display errors as strings
 
-X11Context x11_init() {
+X11Context x11_context;
+
+void x11_init() {
     Display* disp = XOpenDisplay(NULL);
 
     if(!disp) {
@@ -32,29 +34,35 @@ X11Context x11_init() {
     XISelectEvents(disp, DefaultRootWindow(disp), &mask, 1);
     XFlush(disp);
 
-    X11Context ctx = {
-        .display = disp,
-        .opcode = opcode
-    };
-
-    return ctx;
+    x11_context.display = disp;
+    x11_context.opcode = opcode;
 }
 
-void x11_poll_events(X11Context* ctx) {
+KeyEvent x11_poll_event() {
+    KeyEvent res = {
+        .key = KEY_UNKNOWN,
+        .pressed = false,
+        .device = 0
+    };
+
     XEvent event;
-    XNextEvent(ctx->display, &event);
+    XNextEvent(x11_context.display, &event);
 
     XGenericEventCookie* cookie = &event.xcookie;
 
-    if(cookie->type == GenericEvent && cookie->extension == ctx->opcode && XGetEventData(ctx->display, cookie)) {
-        if(cookie->evtype == XI_KeyPress) {
+    if(cookie->type == GenericEvent && cookie->extension == x11_context.opcode && XGetEventData(x11_context.display, cookie)) {
+        if(cookie->evtype == XI_KeyPress || cookie->evtype == XI_KeyRelease) {
             XIDeviceEvent* dev_event = (XIDeviceEvent*)cookie->data;
 
-            printf("Key %u from %d\n", dev_event->detail, dev_event->sourceid);
+            res.key = x11_input_to_key(dev_event->detail);
+            res.pressed = cookie->evtype == XI_KeyPress;
+            res.device = dev_event->sourceid;
         }
 
-        XFreeEventData(ctx->display, cookie);
+        XFreeEventData(x11_context.display, cookie);
     }
+
+    return res;
 }
 
 Key x11_input_to_key(int code) {
@@ -108,4 +116,6 @@ Key x11_input_to_key(int code) {
         case 59: return KEY_LT;
         case 60: return KEY_GT;
     }
+
+    return KEY_UNKNOWN;
 }

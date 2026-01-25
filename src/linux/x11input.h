@@ -11,6 +11,6 @@ typedef struct {
     int opcode;
 } X11Context;
 
-X11Context x11_init();
-void x11_poll_events(X11Context* ctx);
+void x11_init();
+KeyEvent x11_poll_event();
 Key x11_input_to_key(int code);

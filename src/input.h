@@ -4,6 +4,8 @@
 
 // what am I doing
 typedef enum {
+    KEY_UNKNOWN,
+
     // letters
     KEY_A,
     KEY_B,
@@ -54,4 +56,11 @@ typedef enum {
     KEY_EQUALS
 } Key;
 
+typedef struct {
+    Key key;
+    int device;
+    bool pressed;
+} KeyEvent;
+
 void input_init();
+KeyEvent input_poll_event();
