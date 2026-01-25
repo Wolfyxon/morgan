@@ -1,3 +1,5 @@
+#define VERSION "1.0"
+
 #if defined(__linux__)
     #define TARGET_LINUX
 #elif defined(_WIN64) || defined(_WIN32)

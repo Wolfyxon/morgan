@@ -1,11 +1,16 @@
 #include "main.h"
 
 void main(int argc, char** argv) {
-    printf("Running\n");
+    printf("Morgan v%s by Wolfyxon\n", VERSION);
+    printf("https://github.com/Wolfyxon/morgan\n\n");
+    printf("Starting...\n");
     
-    input_init();
+    input_init();    
     midi_init();
 
+    printf("Ready!\n");
+    printf("Select the \"Morgan MIDI\" input port in your DAW.\n");
+    
     while(1) {
         KeyEvent key_ev = input_poll_event();
 
