@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <X11/extensions/XInput.h>
 #include <X11/extensions/XInput2.h>
 
 typedef struct {
@@ -13,4 +15,5 @@ typedef struct {
 
 void x11_init();
 KeyEvent x11_poll_event();
+Keyboard* x11_get_keyboards(int* length);
 Key x11_input_to_key(int code);

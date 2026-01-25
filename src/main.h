@@ -5,3 +5,4 @@
 #include "midi.h"
 
 void main(int argc, char** argv);
+void list_keyboards();

@@ -8,6 +8,8 @@ void main(int argc, char** argv) {
     input_init();    
     midi_init();
 
+    list_keyboards();
+
     printf("Ready!\n");
     printf("Select the \"Morgan MIDI\" input port in your DAW.\n");
     
@@ -31,5 +33,18 @@ void main(int argc, char** argv) {
         } else {
             midi_note_off(note, 50);
         }
+    }
+}
+
+void list_keyboards() {
+    int length = 0;
+    Keyboard* keyboards = input_get_keyboards(&length);
+
+    printf("Detected keyboards: \n");
+
+    for(int i = 0; i < length; i++) {
+        Keyboard kb = keyboards[i];
+
+        printf("  %d: %s \n", kb.id, kb.name);
     }
 }

@@ -12,3 +12,7 @@ void input_init() {
 KeyEvent input_poll_event() {
     return x11_poll_event();
 }
+
+Keyboard* input_get_keyboards(int* length) {
+    return x11_get_keyboards(length);
+}

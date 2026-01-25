@@ -62,5 +62,11 @@ typedef struct {
     bool pressed;
 } KeyEvent;
 
+typedef struct {
+    int id;
+    char* name;
+} Keyboard;
+
 void input_init();
 KeyEvent input_poll_event();
+Keyboard* input_get_keyboards(int* length);

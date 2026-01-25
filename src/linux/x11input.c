@@ -36,6 +36,9 @@ void x11_init() {
 
     x11_context.display = disp;
     x11_context.opcode = opcode;
+
+    int a = 0;
+    x11_get_keyboards(&a);
 }
 
 KeyEvent x11_poll_event() {
@@ -63,6 +66,66 @@ KeyEvent x11_poll_event() {
     }
 
     return res;
+}
+
+
+Keyboard* x11_get_keyboards(int* length) {
+    int device_count;
+    XDeviceInfo* devices = XListInputDevices(x11_context.display, &device_count);
+
+    Keyboard* keyboards = malloc(0);
+    int keyboard_count = 0;
+
+    if(!keyboards) {
+        fprintf(stderr, "error: Failed to allocate keyboard list buffer. \n");
+        return NULL;
+    }
+
+    for(size_t i = 0; i < device_count; i++) {
+        XDeviceInfo device = devices[i];
+        Atom type_atom = XInternAtom(x11_context.display, XI_KEYBOARD, true);
+
+        if(type_atom == BadAtom) {
+            fprintf(stderr, "error: Skipping device %d '%s'. Bad atom.", device.id, device.name);
+            continue;
+        }
+
+        if(type_atom == BadAlloc) {
+            fprintf(stderr, "error: Skipping device %d '%s'. Bad atom allocation.", device.id, device.name);
+            continue;
+        }
+
+        if(device.type == type_atom) {
+            keyboard_count += 1;
+            
+            keyboards = realloc(keyboards, sizeof(Keyboard) * keyboard_count);
+            char* name_buf = malloc(strlen(device.name) + 1);
+
+            if(keyboards == NULL) {
+                fprintf(stderr, "error: Failed to extend keyboard list buffer. \n");
+                return NULL;
+            }
+
+            if(name_buf == NULL) {
+                fprintf(stderr, "Failed to allocate keyboard name buffer. \n");
+                return NULL;
+            }
+
+            strcpy(name_buf, device.name);
+
+            Keyboard kb = {
+                .id = device.id,
+                .name = name_buf
+            };
+
+            keyboards[keyboard_count - 1] = kb;
+        }
+    }
+
+    XFreeDeviceList(devices);
+
+    *length = keyboard_count;
+    return keyboards;
 }
 
 Key x11_input_to_key(int code) {
