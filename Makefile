@@ -12,7 +12,7 @@ SRC_WINDOWS := $(SRC_ROOT)/windows
 SRC_LINUX := $(SRC_ROOT)/linux
 
 # Flags
-CFLAGS_LINUX := -lX11 -lXi
+CFLAGS_LINUX := -lX11 -lXi -lasound
 
 # --- Current config --- #
 # Uncomment one to compile for the platform. 
