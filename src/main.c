@@ -7,13 +7,15 @@ void main(int argc, char** argv) {
     
     input_init();    
     midi_init();
-
-    list_keyboards();
-
+    
     printf("Ready!\n");
     printf("Select the \"Morgan MIDI\" input port in your DAW.\n");
     
-    while(1) {
+   main_loop();
+}
+
+void main_loop() {
+     while(1) {
         KeyEvent key_ev = input_poll_event();
 
         if(key_ev.key == KEY_UNKNOWN) {
