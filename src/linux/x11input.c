@@ -2,8 +2,6 @@
 
 // TODO: Display errors as strings
 
-unsigned long global_key_mask = 0;
-
 X11Context x11_init() {
     Display* disp = XOpenDisplay(NULL);
 

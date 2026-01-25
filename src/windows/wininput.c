@@ -1,7 +1,5 @@
 #include "wininput.h"
 
-unsigned long global_key_mask = 0;
-
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (msg == WM_INPUT) {
         UINT size;
