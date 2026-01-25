@@ -13,6 +13,12 @@ void main(int argc, char** argv) {
             continue;
         }
 
-        printf("Key %d from %d \n", key_ev.key, key_ev.device);
+        printf("Key %d %d from %d \n", key_ev.key, key_ev.pressed, key_ev.device);
+
+        if(key_ev.pressed) {
+            midi_note_on(60, 50);
+        } else {
+            midi_note_off(60, 50);
+        }
     }
 }
