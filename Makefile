@@ -13,6 +13,7 @@ SRC_LINUX := $(SRC_ROOT)/linux
 
 # Flags
 CFLAGS_LINUX := -lX11 -lXi -lasound
+CFLAGS_WINDOWS := -lwinmm
 
 # --- Current config --- #
 # Uncomment one to compile for the platform. 
@@ -20,7 +21,7 @@ CFLAGS_LINUX := -lX11 -lXi -lasound
 # - Windows -
 CC := $(CC_WINDOWS_64)
 SRC_PLATFORM := $(SRC_WINDOWS)
-CFLAGS_PLATFORM := -lwinmm
+CFLAGS_PLATFORM := $(CFLAGS_WINDOWS)
 
 # - Linux -
 #CC := $(CC_LINUX)
