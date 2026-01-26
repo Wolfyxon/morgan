@@ -20,7 +20,7 @@ CFLAGS_LINUX := -lX11 -lXi -lasound
 # - Windows -
 CC := $(CC_WINDOWS_64)
 SRC_PLATFORM := $(SRC_WINDOWS)
-CFLAGS_PLATFORM := 
+CFLAGS_PLATFORM := -lwinmm
 
 # - Linux -
 #CC := $(CC_LINUX)

@@ -5,8 +5,8 @@ void main(int argc, char** argv) {
     printf("https://github.com/Wolfyxon/morgan\n\n");
     printf("Starting...\n");
     
-    //input_init();    
-    //midi_init();
+    input_init();    
+    midi_init();
     
     printf("Ready!\n");
     printf("Select the \"Morgan MIDI\" input port in your DAW.\n");
@@ -26,7 +26,7 @@ void main_loop() {
 
         printf("Key %d %d from %d \n", key_ev.key, key_ev.pressed, key_ev.device);
 
-        /*int note = key_to_note(key_ev.key);
+        int note = key_to_note(key_ev.key);
 
         if(note == 0) {
             continue;
@@ -36,7 +36,7 @@ void main_loop() {
             midi_note_on(note, 50);
         } else {
             midi_note_off(note, 50);
-        }*/
+        }
     }
 }
 
