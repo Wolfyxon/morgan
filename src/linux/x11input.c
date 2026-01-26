@@ -182,7 +182,7 @@ Key x11_input_to_key(int code) {
         case 58: return KEY_M;
         case 59: return KEY_LT;
         case 60: return KEY_GT;
-    }
 
-    return KEY_UNKNOWN;
+        default: return KEY_UNKNOWN;
+    }
 }

@@ -267,5 +267,7 @@ Key win_input_to_key(int code) {
 		case 188: return KEY_LT;
 		case 190: return KEY_GT;
 		case 191: return KEY_SLASH;
+
+        default: return KEY_UNKNOWN;
 	}
 }

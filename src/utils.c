@@ -25,7 +25,7 @@ int key_to_note(Key key) {
         case KEY_L_BRACKET: return 77; // F5
         case KEY_EQUALS: return 78; // F#5
         case KEY_R_BRACKET: return 79; // G5
-    }
 
-    return 0;
+        default: return 0;
+    }
 }
