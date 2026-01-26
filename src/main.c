@@ -1,6 +1,6 @@
 #include "main.h"
 
-void main(int argc, char** argv) {
+int main(int argc, char** argv) {
     printf("Morgan v%s by Wolfyxon\n", VERSION);
     printf("https://github.com/Wolfyxon/morgan\n\n");
     printf("Starting...\n");
@@ -14,6 +14,7 @@ void main(int argc, char** argv) {
     list_keyboards();
     main_loop();
     
+    return 0;
 }
 
 void main_loop() {

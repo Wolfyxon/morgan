@@ -171,12 +171,12 @@ Keyboard* win_get_keyboards(int* length) {
         RAWINPUTDEVICELIST device = device_list[i];
         
         char* name_buf;
-        int name_len;
+        UINT name_len;
 
         // TODO: Human readable name
         if(device.dwType == RIM_TYPEKEYBOARD) {
             if(GetRawInputDeviceInfoA(device.hDevice, RIDI_DEVICENAME, NULL, &name_len) == (UINT)-1) {
-                fprintf(stderr, "error: Skipping device %d. Failed to get name length.", device.hDevice);
+                fprintf(stderr, "error: Skipping device %p. Failed to get name length.", device.hDevice);
                 continue;
             }
 
@@ -187,12 +187,12 @@ Keyboard* win_get_keyboards(int* length) {
             name_buf = malloc(name_len);
 
             if(!name_buf) {
-                fprintf(stderr, "error: Skipping device %d. Failed to allocate name buffer.", device.hDevice);
+                fprintf(stderr, "error: Skipping device %p. Failed to allocate name buffer.", device.hDevice);
                 continue;
             }
 
             if(GetRawInputDeviceInfoA(device.hDevice, RIDI_DEVICENAME, name_buf, &name_len) == (UINT)-1) {
-                fprintf(stderr, "error: Skipping device %d. Failed to get name. \n", device.hDevice);
+                fprintf(stderr, "error: Skipping device %p. Failed to get name. \n", device.hDevice);
                 continue;
             }
             

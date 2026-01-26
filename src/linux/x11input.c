@@ -90,12 +90,12 @@ Keyboard* x11_get_keyboards(int* length) {
         Atom type_atom = XInternAtom(x11_context.display, XI_KEYBOARD, true);
 
         if(type_atom == BadAtom) {
-            fprintf(stderr, "error: Skipping device %d '%s'. Bad atom.", device.id, device.name);
+            fprintf(stderr, "error: Skipping device %ld '%s'. Bad atom.", device.id, device.name);
             continue;
         }
 
         if(type_atom == BadAlloc) {
-            fprintf(stderr, "error: Skipping device %d '%s'. Bad atom allocation.", device.id, device.name);
+            fprintf(stderr, "error: Skipping device %ld '%s'. Bad atom allocation.", device.id, device.name);
             continue;
         }
 
