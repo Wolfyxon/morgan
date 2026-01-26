@@ -12,6 +12,7 @@ SRC_WINDOWS := $(SRC_ROOT)/windows
 SRC_LINUX := $(SRC_ROOT)/linux
 
 # Flags
+CFLAGS := -Wall
 CFLAGS_LINUX := -lX11 -lXi -lasound
 CFLAGS_WINDOWS := -lwinmm
 
@@ -34,7 +35,7 @@ SRC_FILES := $(shell find $(SRC_GLOBAL) $(SRC_PLATFORM) -maxdepth 1 -name \*.c -
 .PHONY: build clean
 
 build:
-	$(CC) $(SRC_FILES) $(CFLAGS_PLATFORM) -o morgan
+	$(CC) $(SRC_FILES) $(CFLAGS) $(CFLAGS_PLATFORM) -o morgan
 
 clean:
 	rm -f morgan.exe
