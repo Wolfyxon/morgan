@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <windows.h>
 #include "../input.h"
+#include "../defines.h"
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

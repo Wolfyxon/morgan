@@ -1,4 +1,5 @@
 #include "../input.h"
+#include "../defines.h"
 
 #include <stdlib.h>
 #include <stdio.h>

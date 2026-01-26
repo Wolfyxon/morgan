@@ -57,6 +57,10 @@ KeyEvent x11_poll_event() {
         if(cookie->evtype == XI_KeyPress || cookie->evtype == XI_KeyRelease) {
             XIDeviceEvent* dev_event = (XIDeviceEvent*)cookie->data;
 
+            #ifdef INPUT_DEBUG
+            printf("[linux] Key %d from device %d\n", dev_event->detail, dev_event->sourceid);
+            #endif
+
             res.key = x11_input_to_key(dev_event->detail);
             res.pressed = cookie->evtype == XI_KeyPress;
             res.device = dev_event->sourceid;
