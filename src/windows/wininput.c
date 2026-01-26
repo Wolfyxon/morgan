@@ -1,5 +1,17 @@
 #include "wininput.h"
 
+#define MAX_KEY_EVENTS 1024
+
+KeyEvent key_event_queue[MAX_KEY_EVENTS];
+size_t key_event_queue_start = 0;
+size_t key_event_queue_end = 0;
+
+const KeyEvent KEY_EVENT_NONE = {
+    .key = KEY_UNKNOWN,
+    .device = 0,
+    .pressed = false
+};
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (msg == WM_INPUT) {
         UINT size;
@@ -11,7 +23,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         RAWINPUT *raw = (RAWINPUT*)buf;
 
         if (raw->header.dwType == RIM_TYPEKEYBOARD) {
-            printf("Key %u from device %p\n", raw->data.keyboard.VKey, raw->header.hDevice);
+            printf("[windows] Key %u from device %p\n", raw->data.keyboard.VKey, raw->header.hDevice);
+
+            KeyEvent event = {
+                .key = raw->data.keyboard.VKey,
+                .device = (int)raw->header.hDevice,
+                .pressed = !(raw->data.keyboard.Flags & RI_KEY_BREAK)
+            };
+
+            win_push_key_event(event);
         }
     }
     
@@ -41,14 +61,34 @@ HWND win_create_window() {
     );
 }
 
-void win_loop() {
-    MSG msg;
+void win_push_key_event(KeyEvent event) {
+    int next = (key_event_queue_start + 1) % MAX_KEY_EVENTS;
 
-    while (GetMessage(&msg, NULL, 0, 0)) {
+    if(next == key_event_queue_end) {
+        fprintf(stderr, "warning: Input queue full, event dropped");
+        return;
+    }
+
+    key_event_queue[next] = event;
+    key_event_queue_start = next;
+}
+
+KeyEvent win_poll_key_event() {
+    MSG msg;
+    
+    while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
-        printf("message \n");
     }
+    
+    if(key_event_queue_start == key_event_queue_end) {
+        return KEY_EVENT_NONE;
+    }
+
+    KeyEvent event = key_event_queue[key_event_queue_end];
+    key_event_queue_end = (key_event_queue_end + 1) % MAX_KEY_EVENTS;
+
+    return event;
 }
 
 void win_init() {
@@ -69,8 +109,6 @@ void win_init() {
         printf("Failed to register input device\n");
         exit(1);
     }
-
-    win_loop();
 }
 
 PRAWINPUTDEVICELIST win_get_input_devices(int* length) {

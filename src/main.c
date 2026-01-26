@@ -12,10 +12,10 @@ void main(int argc, char** argv) {
     printf("Select the \"Morgan MIDI\" input port in your DAW.\n");
     
     list_keyboards();
-    //main_loop();
+    main_loop();
     
 }
-/*
+
 void main_loop() {
      while(1) {
         KeyEvent key_ev = input_poll_event();
@@ -26,7 +26,7 @@ void main_loop() {
 
         printf("Key %d %d from %d \n", key_ev.key, key_ev.pressed, key_ev.device);
 
-        int note = key_to_note(key_ev.key);
+        /*int note = key_to_note(key_ev.key);
 
         if(note == 0) {
             continue;
@@ -36,9 +36,9 @@ void main_loop() {
             midi_note_on(note, 50);
         } else {
             midi_note_off(note, 50);
-        }
+        }*/
     }
-}*/
+}
 
 void list_keyboards() {
     int length = 0;
