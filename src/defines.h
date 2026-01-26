@@ -1,3 +1,5 @@
+#pragma once
+
 #define VERSION "1.0"
 
 //#define INPUT_DEBUG
