@@ -203,8 +203,12 @@ char* config_get_value(char* config_string, char* section, char* key) {
         }
 
         if(strcmp(key, entry->key) == 0) {
+            char* res = malloc(strlen(entry->key) + 1);
+            
+            strcpy(res, entry->key);
             config_free_entry(entry);
-            return entry->value;
+
+            return res;
         }
 
         config_free_entry(entry);
