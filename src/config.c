@@ -71,6 +71,12 @@ char* config_get_section_slice(char* config_string, char* section_name) {
     sprintf(header_str, "[%s]", section_name);
 
     char* after = strstr(config_string, header_str);
+    size_t after_len = strlen(after);
+
+    if(after_len < header_len) {
+        return NULL;
+    }
+
     char* buf = malloc(0);
     size_t len = 0;
 
@@ -79,7 +85,7 @@ char* config_get_section_slice(char* config_string, char* section_name) {
         exit(1);
     }
 
-    for(size_t i = header_len; i < strlen(after); i++) {
+    for(size_t i = header_len; i < after_len; i++) {
         if(after[i] != '[') {
             len++;
         } else {
