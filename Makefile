@@ -32,10 +32,13 @@ CFLAGS_PLATFORM := $(CFLAGS_LINUX)
 # --- Processed --- #
 SRC_FILES := $(shell find $(SRC_GLOBAL) $(SRC_PLATFORM) -maxdepth 1 -name \*.c -o -name \*.h)
 
-.PHONY: build clean
+.PHONY: build run clean
 
 build:
 	$(CC) $(SRC_FILES) $(CFLAGS) $(CFLAGS_PLATFORM) -o morgan
+
+run: build
+	./morgan
 
 clean:
 	rm -f morgan.exe
