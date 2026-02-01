@@ -203,9 +203,9 @@ char* config_get_value(char* config_string, char* section, char* key) {
         }
 
         if(strcmp(key, entry->key) == 0) {
-            char* res = malloc(strlen(entry->key) + 1);
+            char* res = malloc(strlen(entry->value) + 1);
             
-            strcpy(res, entry->key);
+            strcpy(res, entry->value);
             config_free_entry(entry);
 
             return res;
