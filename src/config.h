@@ -12,3 +12,4 @@
 char* get_user_data_dir();
 char* config_get_dir();
 char* config_get_file_path();
+char* config_get_section_slice(char* config_string, char* section_name);

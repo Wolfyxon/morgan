@@ -64,3 +64,37 @@ char* config_get_file_path() {
 char* config_process_string(char* config_string) {
     return strtolf(config_string);
 }
+
+char* config_get_section_slice(char* config_string, char* section_name) {
+    char header_str[strlen(section_name) + 3];
+    sprintf(header_str, "[%s]", section_name);
+
+    char* after = strstr(config_string, header_str);
+    char* buf = malloc(0);
+    size_t len = 0;
+
+    if(buf == NULL) {
+        fprintf(stderr, "error: Failed to allocate config slice buffer \n");
+        exit(1);
+    }
+
+    for(size_t i = 0; i < strlen(after); i++) {
+        if(after[i] != '[') {
+            len++;
+        } else {
+            break;
+        }
+    }
+
+    buf = realloc(buf, len + 1);
+
+    if(buf == NULL) {
+        fprintf(stderr, "error: Failed to reallocate config slice buffer \n");
+        exit(1);
+    }
+
+    strncpy(buf, after, len);
+    free(header_str);
+
+    return buf;
+}
