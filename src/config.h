@@ -21,3 +21,4 @@ char* config_get_file_path();
 char* config_get_section_slice(char* config_string, char* section_name);
 ConfigEntry* config_get_entry(char* line);
 void config_free_entry(ConfigEntry* entry);
+char* config_get_value(char* config_string, char* section, char* key);

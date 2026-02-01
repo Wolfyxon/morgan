@@ -191,3 +191,28 @@ void config_free_entry(ConfigEntry* entry) {
     free(entry->value);
     free(entry);
 }
+
+char* config_get_value(char* config_string, char* section, char* key) {
+    char* section_slice = config_get_section_slice(config_string, section);
+
+    char* line = strtok(section_slice, "\n");
+
+    while(line != NULL) {
+        ConfigEntry* entry = config_get_entry(line);
+        
+        if(entry == NULL) {
+            continue;
+        }
+
+        if(strcmp(key, entry->key) == 0) {
+            config_free_entry(entry);
+            return entry->value;
+        }
+
+        config_free_entry(entry);
+        line = strtok(NULL, "\n");
+    }
+
+    free(section_slice);
+    return NULL;
+}

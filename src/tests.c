@@ -8,6 +8,7 @@ void run_tests() {
     run_test(test_test);
     run_test(test_config_slice);
     run_test(test_config_entry);
+    run_test(test_config_get_value);
     run_test(test_trim);
 
     printf("==== ALL TESTS PASSED ====\n");
@@ -69,6 +70,12 @@ void test_config_entry() {
     if(!fail) {
         exit(1);
     }
+}
+
+void test_config_get_value() {
+    asset_str_eq(config_get_value(example_config, "test_section", "hello"), "hi");
+    asset_str_eq(config_get_value(example_config, "test_section", "hi"), "2");
+    asset_str_eq(config_get_value(example_config, "other_section", "something"), "123");
 }
 
 void test_trim() {

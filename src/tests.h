@@ -19,6 +19,7 @@ void run_tests();
 void test_test();
 void test_config_slice();
 void test_config_entry();
+void test_config_get_value();
 void test_trim();
 
 #endif
