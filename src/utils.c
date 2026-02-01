@@ -10,8 +10,8 @@ void assert(bool condition, char* error) {
 void asset_str_eq(char* str_a, char* str_b) {
     if(strcmp(str_a, str_b) != 0) {
         fprintf(stderr, "error: Strings not equal\n");
-        fprintf(stderr, "-- Left -- \n%s\n", str_a);
-        fprintf(stderr, "-- Right -- \n%s\n", str_b);
+        fprintf(stderr, "-- Left -- \n'%s'\n", str_a);
+        fprintf(stderr, "-- Right -- \n'%s'\n", str_b);
         
         exit(1);
     }
