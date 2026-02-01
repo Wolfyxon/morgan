@@ -63,7 +63,7 @@ void test_config_entry() {
     }
 
     for(size_t i = 0; i < len; i++) {
-        
+        config_free_entry(entries[i]);
     }
 
     if(!fail) {
