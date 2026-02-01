@@ -7,8 +7,6 @@ int main(int argc, char** argv) {
     printf("https://github.com/Wolfyxon/morgan\n\n");
     printf("Starting...\n");
     
-    printf("%s \n", config_get_dir());
-
     input_init();    
     midi_init();
     
