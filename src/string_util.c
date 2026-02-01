@@ -77,3 +77,36 @@ char* strremovechar(char* string, char char_to_remove) {
 char* strtolf(char* string) {
     return strremovechar(string, '\r');
 }
+
+char* strtrim(char* string) {
+    size_t len = strlen(string);
+
+    size_t start = 0;
+    size_t end = 0;
+
+    for(size_t i = 0; i < len; i++) {
+        if(!isspace(string[i])) {
+            start = i;
+            break;
+        }
+    }
+
+    for(size_t i = len - 1; i >= 0; i--) {
+        if(!isspace(string[i])) {
+            end = i + 1;
+            break;
+        }
+    }
+
+    size_t buf_len = end - start;
+    char* buf = malloc(buf_len + 1);
+
+    if(buf == NULL) {
+        fprintf(stderr, "error: Failed to allocate string buffer");
+        exit(1);
+    }
+
+    strncpy(buf, string + start, buf_len);
+
+    return buf;
+}

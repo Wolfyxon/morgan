@@ -7,6 +7,7 @@ void run_tests() {
 
     run_test(test_test);
     run_test(test_config_slice);
+    run_test(test_trim);
 
     printf("==== ALL TESTS PASSED ====\n");
 
@@ -31,6 +32,13 @@ void test_config_slice() {
         config_get_section_slice(example_config, "other_section"), 
         "\nsomething = 123"
     );
+}
+
+void test_trim() {
+    asset_str_eq(strtrim(" "), "");
+    asset_str_eq(strtrim(""), "");
+    asset_str_eq(strtrim("hello "), "hello");
+    asset_str_eq(strtrim(" hi\n"), "hi");
 }
 
 #endif
