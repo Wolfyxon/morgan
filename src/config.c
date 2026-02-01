@@ -50,3 +50,13 @@ char* config_get_dir() {
 
     return buf;
 }
+
+char* get_file_path() {
+    char* dir = config_get_dir();
+    char* buf = malloc(strlen(dir) + strlen(CONFIG_FILE) + 2);
+
+    sprintf(buf, "%s/%s", dir, CONFIG_FILE);
+    free(dir);
+
+    return buf;
+}
