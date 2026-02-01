@@ -6,10 +6,11 @@ void run_tests() {
     printf("===== RUNNING TESTS =====\n");
 
     run_test(test_test);
+    run_test(test_trim);
     run_test(test_config_slice);
     run_test(test_config_entry);
     run_test(test_config_get_value);
-    run_test(test_trim);
+    
 
     printf("==== ALL TESTS PASSED ====\n");
 
@@ -20,6 +21,13 @@ void run_tests() {
 
 void test_test() {
     // Testing works lol
+}
+
+void test_trim() {
+    asset_str_eq(strtrim(" "), "");
+    asset_str_eq(strtrim(""), "");
+    asset_str_eq(strtrim("hello "), "hello");
+    asset_str_eq(strtrim(" hi\n"), "hi");
 }
 
 char* example_config = "[test_section]\nhello = hi\nhi = 2\n[other_section]\nsomething = 123";
@@ -76,13 +84,6 @@ void test_config_get_value() {
     asset_str_eq(config_get_value(example_config, "test_section", "hello"), "hi");
     asset_str_eq(config_get_value(example_config, "test_section", "hi"), "2");
     asset_str_eq(config_get_value(example_config, "other_section", "something"), "123");
-}
-
-void test_trim() {
-    asset_str_eq(strtrim(" "), "");
-    asset_str_eq(strtrim(""), "");
-    asset_str_eq(strtrim("hello "), "hello");
-    asset_str_eq(strtrim(" hi\n"), "hi");
 }
 
 #endif
