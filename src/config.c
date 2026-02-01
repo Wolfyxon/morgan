@@ -180,9 +180,7 @@ ConfigEntry* config_get_entry(char* string) {
 
     entry->key = strtrim(key_buf);
     entry->value = strtrim(value_buf);
-
-    printf("'%s' '%s' \n", entry->key, entry->value);
-
+    
     return entry;
 }
 
