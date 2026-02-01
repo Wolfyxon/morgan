@@ -20,14 +20,14 @@ CFLAGS_WINDOWS := -lwinmm
 # Uncomment one to compile for the platform. 
 # TODO: Make it work by for example `make linux` and `make windows`
 # - Windows -
-CC := $(CC_WINDOWS_64)
-SRC_PLATFORM := $(SRC_WINDOWS)
-CFLAGS_PLATFORM := $(CFLAGS_WINDOWS)
+#CC := $(CC_WINDOWS_64)
+#SRC_PLATFORM := $(SRC_WINDOWS)
+#CFLAGS_PLATFORM := $(CFLAGS_WINDOWS)
 
 # - Linux -
-#CC := $(CC_LINUX)
-#SRC_PLATFORM := $(SRC_LINUX)
-#CFLAGS_PLATFORM := $(CFLAGS_LINUX)
+CC := $(CC_LINUX)
+SRC_PLATFORM := $(SRC_LINUX)
+CFLAGS_PLATFORM := $(CFLAGS_LINUX)
 
 # --- Processed --- #
 SRC_FILES := $(shell find $(SRC_GLOBAL) $(SRC_PLATFORM) -maxdepth 1 -name \*.c -o -name \*.h)
