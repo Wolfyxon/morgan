@@ -17,11 +17,16 @@ void test_test() {
     // Testing works lol
 }
 
+char* example_config = "[test_section]\nhello = hi\nhi = 2\n[other_section]\nsomething = 123";
+
 void test_config_slice() {
-    char* config = "[test_section]\nhello = 1\nhi = 2\n[other_section]\nsomething = 2";
+    asset_str_eq(
+        config_get_section_slice(example_config, "test_section"), 
+        "\nhello = hi\nhi = 2\n"
+    );
 
     asset_str_eq(
-        config_get_section_slice(config, "other_section"), 
-        "\nsomething = 2"
+        config_get_section_slice(example_config, "other_section"), 
+        "\nsomething = 123"
     );
 }
