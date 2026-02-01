@@ -59,6 +59,7 @@ void test_config_entry() {
     bool fail = false;
 
     for(size_t i = 0; i < len; i++) {
+        printf("Testing entry %lu \n", i);
         ConfigEntry* entry = entries[i];
 
         if(strcmp(entry->key, "abc") != 0) {
