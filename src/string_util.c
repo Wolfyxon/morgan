@@ -98,15 +98,16 @@ char* strtrim(char* string) {
         }
     }
 
-    size_t buf_len = end - start;
-    char* buf = malloc(buf_len + 1);
+    size_t new_len = end - start;
+    char* buf = malloc(new_len + 1);
 
     if(buf == NULL) {
         fprintf(stderr, "error: Failed to allocate string buffer");
         exit(1);
     }
 
-    strncpy(buf, string + start, buf_len);
+    strncpy(buf, string + start, new_len);
+    buf[new_len] = '\0';
 
     return buf;
 }
