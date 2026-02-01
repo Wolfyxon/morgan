@@ -17,6 +17,35 @@ size_t strcountlines(char* string) {
     return strcountchar(string, '\n');
 }
 
+int strfind(char* string, char* search) {
+    size_t len = strlen(string);
+    size_t search_len = strlen(search);
+
+    for(int i = 0; i < len; i++) {
+        bool matches = true;
+
+        for(int j = 0; j < search_len; j++) {
+            int idx = i + j;
+
+            if(idx >= len) {
+                matches = false;
+                break;
+            }
+
+            if(string[idx] != search[j]) {
+                matches = false;
+                break;
+            }
+        }
+
+        if(matches) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 char* strremovechar(char* string, char char_to_remove) {
     size_t len = strlen(string);
     size_t new_len = 0;
@@ -42,7 +71,7 @@ char* strremovechar(char* string, char char_to_remove) {
         exit(1);
     }
 
-    return len;
+    return buf;
 }
 
 char* strtolf(char* string) {
