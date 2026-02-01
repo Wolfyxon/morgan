@@ -28,6 +28,7 @@ void test_trim() {
     asset_str_eq(strtrim(""), "");
     asset_str_eq(strtrim("hello "), "hello");
     asset_str_eq(strtrim(" hi\n"), "hi");
+    asset_str_eq(strtrim(" abcdefg               \n"), "hi");
 }
 
 char* example_config = "[test_section]\nhello = hi\nhi = 2\n[other_section]\nsomething = 123";
