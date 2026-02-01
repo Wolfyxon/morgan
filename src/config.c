@@ -94,7 +94,6 @@ char* config_get_section_slice(char* config_string, char* section_name) {
     }
 
     strncpy(buf, after, len);
-    free(header_str);
-
+    
     return buf;
 }
