@@ -66,7 +66,8 @@ char* config_process_string(char* config_string) {
 }
 
 char* config_get_section_slice(char* config_string, char* section_name) {
-    char header_str[strlen(section_name) + 3];
+    size_t header_len = strlen(section_name) + 2;
+    char header_str[header_len + 1];
     sprintf(header_str, "[%s]", section_name);
 
     char* after = strstr(config_string, header_str);
@@ -78,7 +79,7 @@ char* config_get_section_slice(char* config_string, char* section_name) {
         exit(1);
     }
 
-    for(size_t i = 0; i < strlen(after); i++) {
+    for(size_t i = header_len; i < strlen(after); i++) {
         if(after[i] != '[') {
             len++;
         } else {
@@ -93,7 +94,7 @@ char* config_get_section_slice(char* config_string, char* section_name) {
         exit(1);
     }
 
-    strncpy(buf, after, len);
-    
+    strncpy(buf, after + header_len, len);
+
     return buf;
 }
