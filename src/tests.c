@@ -62,6 +62,11 @@ void test_config_entry() {
         printf("Testing entry %lu \n", i);
         ConfigEntry* entry = entries[i];
 
+        if(entry == NULL) {
+            fprintf(stderr, "Entry %lu: Got NULL \n", i);
+            fail = true;
+        }
+
         if(strcmp(entry->key, "abc") != 0) {
             fprintf(stderr, "Entry %lu: Unexpected key '%s' \n", i, entry->key);
             fail = true;
