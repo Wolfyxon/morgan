@@ -112,7 +112,7 @@ ConfigEntry* config_get_entry(char* string) {
     size_t key_len = 0;
 
     for(size_t i = 0; i < len; i++) {
-        if(string[i] == '\n' || string[i] == '=') {
+        if(string[i] == '=') {
             return NULL;
         }
 
