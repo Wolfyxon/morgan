@@ -7,6 +7,7 @@ void run_tests() {
 
     run_test(test_test);
     run_test(test_config_slice);
+    run_test(test_config_entry);
     run_test(test_trim);
 
     printf("==== ALL TESTS PASSED ====\n");
@@ -32,6 +33,42 @@ void test_config_slice() {
         config_get_section_slice(example_config, "other_section"), 
         "\nsomething = 123"
     );
+}
+
+void test_config_entry() {
+    ConfigEntry* entries[] = {
+        config_get_entry("abc = defg"),
+        config_get_entry("abc=defg"),
+        config_get_entry("abc =defg"),
+        config_get_entry("abc= defg"),
+        config_get_entry("abc = defg \n"),
+        config_get_entry("     abc= defg")
+    };
+
+    size_t len = sizeof(entries) / sizeof(ConfigEntry*);
+    bool fail = false;
+
+    for(size_t i = 0; i < len; i++) {
+        ConfigEntry* entry = entries[i];
+
+        if(strcmp(entry->key, "abc") != 0) {
+            fprintf(stderr, "Entry %lu: Unexpected key '%s' \n", i, entry->key);
+            fail = true;
+        }
+
+        if(strcmp(entry->value, "defg") != 0) {
+            fprintf(stderr, "Entry %lu: Unexpected value '%s' \n", i, entry->value);
+            fail = true;
+        }
+    }
+
+    for(size_t i = 0; i < len; i++) {
+        
+    }
+
+    if(!fail) {
+        exit(1);
+    }
 }
 
 void test_trim() {

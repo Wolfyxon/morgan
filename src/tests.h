@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include "utils.h"
 #include "config.h"
@@ -17,6 +18,7 @@ void run_tests();
 
 void test_test();
 void test_config_slice();
+void test_config_entry();
 void test_trim();
 
 #endif

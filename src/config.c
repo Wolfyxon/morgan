@@ -104,3 +104,90 @@ char* config_get_section_slice(char* config_string, char* section_name) {
 
     return buf;
 }
+
+ConfigEntry* config_get_entry(char* string) {
+    size_t len = strlen(string);
+    
+    size_t key_start = 0;
+    size_t key_len = 0;
+
+    for(size_t i = 0; i < len; i++) {
+        if(string[i] == '\n' || string[i] == '=') {
+            return NULL;
+        }
+
+        if(!isspace(string[i])) {
+            break;
+        }
+
+        key_start++;
+    }
+
+    for(size_t i = key_start; i < len; i++) {
+        key_len++;
+
+        if(string[i] == '\n') {
+            return NULL;
+        }
+
+        if(string[i] == '=') {
+            break;
+        }
+    }
+
+    size_t value_start = key_start + key_len + 2;
+    size_t value_len = 0;
+
+    if(value_start >= len) {
+        return NULL;
+    }
+
+    for(size_t i = value_start; i < len; i++) {
+        if(string[i] == '\n') {
+            return NULL;
+        }
+        
+        if(!isspace(string[i])) {
+            break;
+        }
+
+        value_start++;
+    }
+
+    for(size_t i = value_start; i < len; i++) {
+        value_len++;
+        
+        if(string[i] == '\n') {
+            break;
+        }
+    }
+    
+    char* key_buf = malloc(key_len + 1);
+    char* value_buf = malloc(value_len + 1);
+    
+    if(key_buf == NULL) {
+        fprintf(stderr, "error: Failed to allocate key string buffer \n");
+        exit(1);
+    }
+
+    if(value_buf == NULL) {
+        fprintf(stderr, "error: Failed to allocate value string buffer \n");
+        exit(1);
+    }
+
+    strncpy(key_buf, string + key_start, key_len);
+    strncpy(value_buf, string + value_start, value_len);
+
+    ConfigEntry* entry = malloc(sizeof(ConfigEntry));
+
+    entry->key = key_buf;
+    entry->value = value_buf;
+
+    return entry;
+}
+
+void config_free_entry(ConfigEntry* entry) {
+    free(entry->key);
+    free(entry->value);
+    free(entry);
+}
