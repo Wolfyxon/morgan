@@ -124,12 +124,12 @@ ConfigEntry* config_get_entry(char* string) {
         key_start++;
     }
 
-    for(size_t i = key_start; i < len; i++) {
-        if(string[i] == '\n') {
+    for(size_t i = 0; i < len; i++) {
+        if(string[key_start + i] == '\n') {
             return NULL;
         }
-
-        if(string[i] == '=') {
+        
+        if(string[key_start + i] == '=') {
             key_len = i;
             break;
         }
@@ -180,7 +180,7 @@ ConfigEntry* config_get_entry(char* string) {
 
     entry->key = strtrim(key_buf);
     entry->value = strtrim(value_buf);
-    
+
     return entry;
 }
 
