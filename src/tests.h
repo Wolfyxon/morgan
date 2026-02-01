@@ -15,5 +15,6 @@ void run_tests();
 } while(0);
 
 void test_test();
+void test_config_slice();
 
 #endif
