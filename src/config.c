@@ -60,3 +60,7 @@ char* config_get_file_path() {
 
     return buf;
 }
+
+char* config_process_string(char* config_string) {
+    return strtolf(config_string);
+}

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "defines.h"
+#include "string_util.h"
 
 #define CONFIG_FOLDER "morgan"
 #define CONFIG_FILE "morgan.conf"
