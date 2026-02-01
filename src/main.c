@@ -1,6 +1,8 @@
 #include "main.h"
 
 int main(int argc, char** argv) {
+    run_tests();
+
     printf("Morgan v%s by Wolfyxon\n", VERSION);
     printf("https://github.com/Wolfyxon/morgan\n\n");
     printf("Starting...\n");
