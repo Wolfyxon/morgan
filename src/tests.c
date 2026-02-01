@@ -13,6 +13,8 @@ void run_tests() {
     #endif
 }
 
+#ifdef ENABLE_TESTS
+
 void test_test() {
     // Testing works lol
 }
@@ -30,3 +32,5 @@ void test_config_slice() {
         "\nsomething = 123"
     );
 }
+
+#endif
