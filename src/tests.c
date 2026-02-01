@@ -67,7 +67,7 @@ void test_config_entry() {
         config_free_entry(entries[i]);
     }
 
-    if(!fail) {
+    if(fail) {
         exit(1);
     }
 }
