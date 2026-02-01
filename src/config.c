@@ -117,6 +117,7 @@ ConfigEntry* config_get_entry(char* string) {
         }
 
         if(!isspace(string[i])) {
+            key_start = i;
             break;
         }
 
@@ -124,18 +125,17 @@ ConfigEntry* config_get_entry(char* string) {
     }
 
     for(size_t i = key_start; i < len; i++) {
-        key_len++;
-
         if(string[i] == '\n') {
             return NULL;
         }
 
         if(string[i] == '=') {
+            key_len = i;
             break;
         }
     }
 
-    size_t value_start = key_start + key_len + 2;
+    size_t value_start = key_start + key_len + 1;
     size_t value_len = 0;
 
     if(value_start >= len) {
@@ -155,33 +155,33 @@ ConfigEntry* config_get_entry(char* string) {
     }
 
     for(size_t i = value_start; i < len; i++) {
-        value_len++;
-        
         if(string[i] == '\n') {
             break;
         }
-    }
-    
-    char* key_buf = malloc(key_len + 1);
-    char* value_buf = malloc(value_len + 1);
-    
-    if(key_buf == NULL) {
-        fprintf(stderr, "error: Failed to allocate key string buffer \n");
-        exit(1);
-    }
 
-    if(value_buf == NULL) {
-        fprintf(stderr, "error: Failed to allocate value string buffer \n");
-        exit(1);
+        value_len++;
     }
+    
+    char key_buf[key_len + 1];
+    char value_buf[value_len + 1];
 
     strncpy(key_buf, string + key_start, key_len);
     strncpy(value_buf, string + value_start, value_len);
-
+    
+    key_buf[key_len] = '\0';
+    value_buf[value_len] = '\0';
+    
     ConfigEntry* entry = malloc(sizeof(ConfigEntry));
 
-    entry->key = key_buf;
-    entry->value = value_buf;
+    if(entry == NULL) {
+        fprintf(stderr, "error: Failed to allocate config entry buffer \n");
+        exit(1);
+    }
+
+    entry->key = strtrim(key_buf);
+    entry->value = strtrim(value_buf);
+
+    printf("'%s' '%s' \n", entry->key, entry->value);
 
     return entry;
 }
