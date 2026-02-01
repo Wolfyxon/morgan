@@ -1,5 +1,12 @@
 #include "utils.h"
 
+void assert(bool condition, char* error) {
+    if(!condition) {
+        fprintf(stderr, "error: %s\n", error);
+        exit(1);
+    }
+}
+
 int key_to_note(Key key) {
     switch(key) {
         // TODO: Add more notes 
