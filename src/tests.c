@@ -49,7 +49,7 @@ void test_config_entry() {
     ConfigEntry* entries[] = {
         config_get_entry("abc = defg"),
         config_get_entry("abc=defg"),
-        config_get_entry("abc =defg"),
+        config_get_entry("\nabc =defg"),
         config_get_entry("abc= defg"),
         config_get_entry("abc = defg \n"),
         config_get_entry("     abc= defg")
