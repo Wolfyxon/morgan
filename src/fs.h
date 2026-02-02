@@ -15,5 +15,6 @@
 #endif
 
 char* freadstr(char* path);
+int ftouch(char* path);
 bool fexists(char* path);
 int create_dir(char* path);

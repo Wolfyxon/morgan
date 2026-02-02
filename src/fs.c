@@ -40,6 +40,17 @@ char* freadstr(char* path) {
     return file_buf;
 }
 
+int ftouch(char* path) {
+    FILE* file = fopen(path, "w");
+    
+    if(file == NULL) {
+        return 1;
+    }
+
+    fclose(file);
+    return 0;
+}
+
 bool fexists(char* path) {
     return access(path, 0) == 0;
 }
