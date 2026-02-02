@@ -34,3 +34,7 @@ char* freadstr(char* path) {
 
     return file_buf;
 }
+
+bool fexists(char* path) {
+    return access(path, 0) == 0;
+}
