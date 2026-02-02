@@ -46,7 +46,7 @@ bool fexists(char* path) {
 
 int create_dir(char* path) {
     if(fexists(path)) {
-        return;
+        return 0;
     }
 
     #ifdef TARGET_WINDOWS
