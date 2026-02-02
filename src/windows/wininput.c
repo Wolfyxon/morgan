@@ -7,7 +7,7 @@ size_t key_event_queue_start = 0;
 size_t key_event_queue_end = 0;
 
 const KeyEvent KEY_EVENT_NONE = {
-    .key = KEY_UNKNOWN,
+    .key = KEY_NONE,
     .device = 0,
     .pressed = false
 };

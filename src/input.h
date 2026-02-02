@@ -4,6 +4,7 @@
 
 // what am I doing
 typedef enum {
+    KEY_NONE,
     KEY_UNKNOWN,
 
     // letters

@@ -2,7 +2,7 @@
 
 // TODO: Display errors as strings
 
-X11Context x11_context;
+X11Context x11_context = {0};
 
 void x11_init() {
     Display* disp = XOpenDisplay(NULL);
@@ -41,9 +41,18 @@ void x11_init() {
     x11_get_keyboards(&a);
 }
 
+void x11_assert_ready() {
+    if(x11_context.display == NULL) {
+        fprintf(stderr, "error: X11 input not initialized\n");
+        exit(1);
+    }
+}
+
 KeyEvent x11_poll_event() {
+    x11_assert_ready();
+
     KeyEvent res = {
-        .key = KEY_UNKNOWN,
+        .key = KEY_NONE,
         .pressed = false,
         .device = 0
     };
@@ -74,6 +83,8 @@ KeyEvent x11_poll_event() {
 
 
 Keyboard* x11_get_keyboards(int* length) {
+    x11_assert_ready();
+
     int device_count;
     XDeviceInfo* devices = XListInputDevices(x11_context.display, &device_count);
 

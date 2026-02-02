@@ -15,6 +15,7 @@ typedef struct {
 } X11Context;
 
 void x11_init();
+void x11_assert_ready();
 KeyEvent x11_poll_event();
 Keyboard* x11_get_keyboards(int* length);
 Key x11_input_to_key(int code);
