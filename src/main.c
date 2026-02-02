@@ -112,7 +112,7 @@ void setup_wizard(char* config_path) {
         int octave = input_int("Enter octave number");
         
         char kb_config[1024] = {0};
-        snprintf(kb_config, sizeof(kb_config), "[keyboard_%d]\noctave = %d", key_ev.device, octave);
+        snprintf(kb_config, sizeof(kb_config), "[keyboard_%d]\noctave = %d\n\n", key_ev.device, octave);
         size_t len = strlen(kb_config);
 
         size_t old_len = config_len;
