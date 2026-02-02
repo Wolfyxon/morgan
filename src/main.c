@@ -5,6 +5,13 @@ int main(int argc, char** argv) {
 
     CmdlineOptions cmdline_options = process_args(argc, argv);
 
+    if(cmdline_options.config_path != NULL) {
+        if(!fexists(cmdline_options.config_path)) {
+            fprintf(stderr, "error: Config file '%s' not found\n", cmdline_options.config_path);
+            exit(1);
+        }
+    }
+
     print_header();
     start();
     
@@ -26,9 +33,10 @@ CmdlineOptions process_args(int argc, char** argv) {
         if(strcmp(arg, "--config") == 0 || strcmp(arg, "-c") == 0) {
             if(i + 1 < argc) {
                 res.config_path = argv[i + 1];
+                i++;
                 continue;
             } else {
-                fprintf(stderr, "error: %s expects a value", arg);
+                fprintf(stderr, "error: %s expects a value \n", arg);
                 exit(1);
             }
         }
