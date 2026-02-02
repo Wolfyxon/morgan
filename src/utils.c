@@ -46,3 +46,7 @@ int key_to_note(Key key) {
         default: return 0;
     }
 }
+
+int offset_note(int note, int octave_offset) {
+    return note + (12 * octave_offset);
+}
