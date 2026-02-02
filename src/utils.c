@@ -26,6 +26,14 @@ bool confirm(char* message) {
     return inp == 'y' || inp == 'Y';
 }
 
+void sleep_ms(unsigned long ms) {
+    #ifdef TARGET_WINDOWS
+    Sleep(ms);
+    #else
+    usleep(ms * 1000);
+    #endif
+}
+
 void* checked_malloc(size_t size, char* buffer_name) {
     void* buf = malloc(size);
 
