@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "utils.h"
 #include "config.h"
+#include "fs.h"
 
 #define ENABLE_TESTS
 
@@ -18,6 +19,7 @@ void run_tests();
 
 void test_test();
 void test_trim();
+void test_fexists();
 void test_config_slice();
 void test_config_entry();
 void test_config_get_value();

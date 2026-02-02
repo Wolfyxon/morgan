@@ -7,6 +7,7 @@ void run_tests() {
 
     run_test(test_test);
     run_test(test_trim);
+    run_test(test_fexists);
     run_test(test_config_slice);
     run_test(test_config_entry);
     run_test(test_config_get_value);
@@ -29,6 +30,11 @@ void test_trim() {
     asset_str_eq(strtrim("hello "), "hello");
     asset_str_eq(strtrim(" hi\n"), "hi");
     asset_str_eq(strtrim(" abcdefg               \n"), "abcdefg");
+}
+
+void test_fexists() {
+    assert(fexists("Makefile"), "'Makefile' detected as nonexistent");
+    assert(fexists("src"), "'src' dir detected as nonexistent");
 }
 
 char* example_config = "[test_section]\nhello = hi\nhi = 2\n[other_section]\nsomething = 123";
