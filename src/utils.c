@@ -17,6 +17,15 @@ void asset_str_eq(char* str_a, char* str_b) {
     }
 }
 
+bool confirm(char* message) {
+    printf("%s [Y/N]: ", message);
+    char inp = getc(stdin);
+
+    fflush(stdin);
+
+    return inp == 'y' || inp == 'Y';
+}
+
 int key_to_note(Key key) {
     switch(key) {
         // TODO: Add more notes 
