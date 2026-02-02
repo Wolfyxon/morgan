@@ -22,6 +22,21 @@ void flush_stdin() {
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
+int input_int(char* message) {
+    char buf[256];
+
+    while(1) {
+        printf("%s: ", message);
+        scanf("%255s", buf);
+
+        if(strisnum(buf)) {
+            return atoi(buf);
+        }
+        
+        fprintf(stderr, "error: Please enter a valid number.\n");
+    }
+}
+
 bool confirm(char* message) {
     printf("%s [Y/N]: ", message);
     fflush(stdout);
