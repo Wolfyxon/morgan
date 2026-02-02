@@ -2,15 +2,57 @@
 
 int main(int argc, char** argv) {
     run_tests();
+
+    CmdlineOptions cmdline_options = process_args(argc, argv);
+
     print_header();
     start();
     
     return 0;
 }
 
+CmdlineOptions process_args(int argc, char** argv) {
+    CmdlineOptions res = {0};
+
+    for(size_t i = 1; i < argc; i++) {
+        char* arg = argv[i];
+        
+        if(strcmp(arg, "--help") == 0 || strcmp(arg, "-h") == 0) {
+            print_header();
+            print_help();
+            exit(0);
+        }
+
+        if(strcmp(arg, "--config") == 0 || strcmp(arg, "-c") == 0) {
+            if(i + 1 < argc) {
+                res.config_path = argv[i + 1];
+                continue;
+            } else {
+                fprintf(stderr, "error: %s expects a value", arg);
+                exit(1);
+            }
+        }
+
+        fprintf(stderr, "error: Unrecognized argument '%s'\n", arg);
+        print_help();
+        exit(1);
+    }
+    
+    return res;
+}
+
 void print_header() {
     printf("Morgan v%s by Wolfyxon\n", VERSION);
     printf("https://github.com/Wolfyxon/morgan\n\n");
+}
+
+void print_help() {
+    printf("Usage: morgan [-h | --help] [--config <path> | -c <path>] \n\n");
+    
+    printf("Options: \n");
+    printf("    -h, --help      Displays help. \n");
+    printf("    -c, --config    Specifies the config file path. \n");
+    
 }
 
 void start() {
