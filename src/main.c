@@ -170,7 +170,7 @@ void main_loop() {
 
         int note = key_to_note(key_ev.key);
 
-        if(note == 0) {
+        if(note == INVALID_NOTE) {
             continue;
         }
 

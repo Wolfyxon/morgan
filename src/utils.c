@@ -105,7 +105,7 @@ int key_to_note(Key key) {
         case KEY_EQUALS: return 78; // F#5
         case KEY_R_BRACKET: return 79; // G5
 
-        default: return 0;
+        default: return INVALID_NOTE;
     }
 }
 

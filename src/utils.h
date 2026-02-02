@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "midi.h"
 #include "input.h"
 #include "string_util.h"
 
