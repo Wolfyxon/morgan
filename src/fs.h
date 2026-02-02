@@ -13,5 +13,7 @@
 #include <sys/stat.h>
 #endif
 
+#define MKDIR_MODE 0777
+
 char* freadstr(char* path);
 bool fexists(char* path);
