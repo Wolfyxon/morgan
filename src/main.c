@@ -90,7 +90,7 @@ void setup_wizard(char* config_path) {
 
     input_init();
 
-    do {
+    while(1) {
         input_poll_event();
 
         printf("Press any key on a desired keyboard...\n");
@@ -100,12 +100,11 @@ void setup_wizard(char* config_path) {
         while((key_ev = input_poll_event()).key == KEY_NONE);
 
         printf("Keyboard id: %d \n", key_ev.device);
+        int octave = input_int("Enter octave number");
         
         char kb_config[1024] = {0};
-        snprintf(kb_config, sizeof(kb_config), "[keyboard_%d]\n", key_ev.device);
+        snprintf(kb_config, sizeof(kb_config), "[keyboard_%d]\noctave = %d", key_ev.device, octave);
         size_t len = strlen(kb_config);
-        
-        printf("%s\n", kb_config);
 
         size_t old_len = config_len;
         config_len += len + 1;
@@ -117,8 +116,8 @@ void setup_wizard(char* config_path) {
         if(!confirm("Add another keyboard?")) {
             break;
         }
-    } while(1);
-
+    }
+    
     printf("Configuration saved in '%s' \n", config_path);
 }
 
