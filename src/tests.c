@@ -8,11 +8,12 @@ void run_tests() {
     run_test(test_test);
     run_test(test_trim);
     run_test(test_fexists);
+    run_test(test_mkdir);
+    run_test(test_rmdir);
     run_test(test_config_slice);
     run_test(test_config_entry);
     run_test(test_config_get_value);
     
-
     printf("==== ALL TESTS PASSED ====\n");
 
     #endif
@@ -35,6 +36,21 @@ void test_trim() {
 void test_fexists() {
     assert(fexists("Makefile"), "'Makefile' detected as nonexistent");
     assert(fexists("src"), "'src' dir detected as nonexistent");
+}
+
+void test_mkdir() {
+    if(fexists("temp")) {
+        fprintf(stderr, "warning: 'temp' already exists. Running test_rmdir() to remove it\n");
+        test_rmdir();
+    }
+
+    assert(mkdir("temp", MKDIR_MODE) == 0, "Failed to create dir 'temp'");
+    assert(fexists("temp"), "mkdir() returned success but 'temp' does not exist");
+}
+
+void test_rmdir() {
+    assert(rmdir("temp") == 0, "Failed to remove dir 'temp'");
+    assert(!fexists("temp"), "rmdir() returned success but 'temp' still exists");
 }
 
 char* example_config = "[test_section]\nhello = hi\nhi = 2\n[other_section]\nsomething = 123";
