@@ -2,12 +2,21 @@
 
 int main(int argc, char** argv) {
     run_tests();
+    print_header();
+    start();
+    
+    return 0;
+}
 
+void print_header() {
     printf("Morgan v%s by Wolfyxon\n", VERSION);
     printf("https://github.com/Wolfyxon/morgan\n\n");
+}
+
+void start() {
     printf("Starting...\n");
     
-    input_init();    
+    input_init();
     midi_init();
     
     printf("Ready!\n");
@@ -15,8 +24,6 @@ int main(int argc, char** argv) {
     
     list_keyboards();
     main_loop();
-    
-    return 0;
 }
 
 void main_loop() {

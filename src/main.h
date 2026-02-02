@@ -7,5 +7,7 @@
 #include "tests.h"
 
 int main(int argc, char** argv);
+void print_header();
+void start();
 void main_loop();
 void list_keyboards();
