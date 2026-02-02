@@ -54,4 +54,6 @@ void list_keyboards() {
 
         printf("  %d: %s \n", kb.id, kb.name);
     }
+
+    free(keyboards);
 }
