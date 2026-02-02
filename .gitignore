@@ -5,6 +5,8 @@ morgan
 a.out
 
 *.conf
+*.temp
+*.tmp
 *.ini
 *.exe
 *.obj
