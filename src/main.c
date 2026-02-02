@@ -51,6 +51,12 @@ CmdlineOptions process_args(int argc, char** argv) {
             }
         }
 
+        if(strcmp(arg, "--keyboards") == 0 || strcmp(arg, "-k") == 0) {
+            input_init();
+            list_keyboards();
+            exit(0);
+        }
+
         fprintf(stderr, "error: Unrecognized argument '%s'\n", arg);
         print_help();
         exit(1);
@@ -88,9 +94,9 @@ void print_help() {
     printf("Usage: morgan [-h | --help] [--config <path> | -c <path>] \n\n");
     
     printf("Options: \n");
-    printf("    -h, --help      Displays help. \n");
-    printf("    -c, --config    Specifies the config file path. \n");
-    
+    printf("    -h, --help        Displays help. \n");
+    printf("    -c, --config      Specifies the config file path. \n");
+    printf("    -k, --keyboards   Lists detected keyboards\n");
 }
 
 void start() {
@@ -102,7 +108,6 @@ void start() {
     printf("Ready!\n");
     printf("Select the \"Morgan MIDI\" input port in your DAW.\n");
     
-    list_keyboards();
     main_loop();
 }
 
