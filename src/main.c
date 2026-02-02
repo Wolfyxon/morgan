@@ -85,6 +85,13 @@ void setup_wizard(char* config_path) {
         return;
     }
 
+    FILE* file = fopen(config_path, "w");
+
+    if(file == NULL) {
+        fprintf(stderr, "error: Failed to open '%s' for writing. \n", config_path);
+        exit(1);
+    }
+
     char* config_string = checked_malloc(0, "config string");
     size_t config_len = 0;
 
@@ -117,7 +124,11 @@ void setup_wizard(char* config_path) {
             break;
         }
     }
-    
+
+    fprintf(file, "%s", config_string);
+    fclose(file);
+    free(config_string);
+
     printf("Configuration saved in '%s' \n", config_path);
 }
 
