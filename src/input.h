@@ -69,5 +69,6 @@ typedef struct {
 } Keyboard;
 
 void input_init();
+void input_flush();
 KeyEvent input_poll_event();
 Keyboard* input_get_keyboards(int* length);

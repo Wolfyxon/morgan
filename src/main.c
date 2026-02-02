@@ -98,10 +98,12 @@ void setup_wizard(char* config_path) {
     input_init();
 
     while(1) {
-        input_poll_event();
-
         printf("Press any key on a desired keyboard...\n");
         fflush(stdout);
+
+        input_flush();
+        sleep_ms(100);
+        input_flush();
 
         KeyEvent key_ev;
         while((key_ev = input_poll_event()).key == KEY_NONE);

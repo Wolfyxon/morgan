@@ -5,6 +5,10 @@ void input_init() {
     win_init();
 }
 
+void input_flush() {
+    
+}
+
 Keyboard* input_get_keyboards(int* length) {
     return win_get_keyboards(length);
 }

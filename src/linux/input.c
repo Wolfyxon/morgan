@@ -9,6 +9,10 @@ void input_init() {
     x11_init();
 }
 
+void input_flush() {
+    x11_flush();
+}
+
 KeyEvent input_poll_event() {
     return x11_poll_event();
 }

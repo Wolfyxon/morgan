@@ -48,6 +48,15 @@ void x11_assert_ready() {
     }
 }
 
+void x11_flush() {
+    x11_assert_ready();
+
+    while (XPending(x11_context.display)) {
+        XEvent ev;
+        XNextEvent(x11_context.display, &ev);
+    }
+}
+
 KeyEvent x11_poll_event() {
     x11_assert_ready();
 
