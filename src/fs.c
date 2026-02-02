@@ -1,5 +1,7 @@
 #include "fs.h"
 
+#define MKDIR_MODE 0777
+
 char* freadstr(char* path) {
     FILE* file = fopen(path, "r");
     
