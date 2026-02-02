@@ -73,6 +73,7 @@ void setup_wizard(char* config_path) {
             fprintf(stderr, "error: Failed to create directory '%s'. Program will continue in default state. \n", config_dir);
             return;
         }
+        return;
 
         if(ftouch(config_path) != 0) {
             fprintf(stderr, "error: Failed to create file '%s'. Program will continue in a default state\n", config_path);
@@ -83,6 +84,42 @@ void setup_wizard(char* config_path) {
 
         return;
     }
+
+    char* config_string = checked_malloc(0, "config string");
+    size_t config_len = 0;
+
+    input_init();
+
+    do {
+        input_poll_event();
+
+        printf("Press any key on a desired keyboard...\n");
+        fflush(stdout);
+
+        KeyEvent key_ev;
+        while((key_ev = input_poll_event()).key == KEY_NONE);
+
+        printf("Keyboard id: %d \n", key_ev.device);
+        
+        char kb_config[1024] = {0};
+        snprintf(kb_config, sizeof(kb_config), "[keyboard_%d]\n", key_ev.device);
+        size_t len = strlen(kb_config);
+        
+        printf("%s\n", kb_config);
+
+        size_t old_len = config_len;
+        config_len += len + 1;
+        config_string = checked_realloc(config_string, config_len, "config string");
+
+        memset(config_string + old_len, '\0', config_len - old_len);
+        strcat(config_string, kb_config);
+
+        if(!confirm("Add another keyboard?")) {
+            break;
+        }
+    } while(1);
+
+    printf("Configuration saved in '%s' \n", config_path);
 }
 
 void print_header() {
@@ -115,7 +152,7 @@ void main_loop() {
      while(1) {
         KeyEvent key_ev = input_poll_event();
 
-        if(key_ev.key == KEY_UNKNOWN) {
+        if(key_ev.key == KEY_NONE || key_ev.key == KEY_UNKNOWN) {
             continue;
         }
 
