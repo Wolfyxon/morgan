@@ -32,7 +32,7 @@ int input_int(char* message) {
         if(strisnum(buf)) {
             return atoi(buf);
         }
-        
+
         fprintf(stderr, "error: Please enter a valid number.\n");
     }
 }
@@ -41,10 +41,12 @@ bool confirm(char* message) {
     printf("%s [Y/N]: ", message);
     fflush(stdout);
     
-    char inp = getc(stdin);
+    char inp[3] = {0};
+    scanf("%3s", inp);
+
     flush_stdin();
 
-    return inp == 'y' || inp == 'Y';
+    return inp[0] == 'y' || inp[0] == 'Y';
 }
 
 void sleep_ms(unsigned long ms) {
