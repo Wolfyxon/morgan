@@ -9,3 +9,5 @@ void asset_str_eq(char* str_a, char* str_b);
 
 int key_to_note(Key key);
 int offset_note(int note, int octave_offset);
+
+char* freadstr(char* path);
