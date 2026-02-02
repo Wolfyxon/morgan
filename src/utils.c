@@ -26,6 +26,28 @@ bool confirm(char* message) {
     return inp == 'y' || inp == 'Y';
 }
 
+void* checked_malloc(size_t size, char* buffer_name) {
+    void* buf = malloc(size);
+
+    if(buf == NULL) {
+        fprintf(stderr, "error: Failed to allocate %s\n", buffer_name);
+        exit(1);
+    }
+
+    return buf;
+}
+
+void* checked_realloc(void* buffer, size_t size, char* buffer_name) {
+    void* buf = realloc(buffer, size);
+
+    if(buf == NULL) {
+        fprintf(stderr, "error: Failed to reallocate %s\n", buffer_name);
+        exit(1);
+    }
+
+    return buf;
+}
+
 int key_to_note(Key key) {
     switch(key) {
         // TODO: Add more notes 
