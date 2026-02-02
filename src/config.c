@@ -101,6 +101,7 @@ char* config_get_section_slice(char* config_string, char* section_name) {
     }
 
     strncpy(buf, after + header_len, len);
+    buf[len] = '\0';
 
     return buf;
 }
