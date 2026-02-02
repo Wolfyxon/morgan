@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "fs.h"
 #include "defines.h"
 #include "utils.h"
 #include "input.h"
@@ -12,6 +13,7 @@ typedef struct {
 
 int main(int argc, char** argv);
 CmdlineOptions process_args(int argc, char** argv);
+void setup_wizard(char* config_path);
 void print_header();
 void print_help();
 void start();

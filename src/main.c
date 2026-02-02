@@ -4,15 +4,25 @@ int main(int argc, char** argv) {
     run_tests();
 
     CmdlineOptions cmdline_options = process_args(argc, argv);
+    char* config_path;
 
     if(cmdline_options.config_path != NULL) {
         if(!fexists(cmdline_options.config_path)) {
             fprintf(stderr, "error: Config file '%s' not found\n", cmdline_options.config_path);
             exit(1);
         }
+
+        config_path = cmdline_options.config_path;
+    } else {
+        config_path = config_get_file_path();
     }
 
     print_header();
+
+    if(!fexists(config_path)) {
+        setup_wizard(config_path);
+    }
+
     start();
     
     return 0;
@@ -47,6 +57,26 @@ CmdlineOptions process_args(int argc, char** argv) {
     }
     
     return res;
+}
+
+void setup_wizard(char* config_path) {
+    char* config_dir = config_get_dir();
+
+    if(!confirm("Would you like to run the configuration wizard?")) {
+        if(create_dir(config_dir) != 0) {
+            fprintf(stderr, "error: Failed to create directory '%s'. Program will continue in default state. \n", config_dir);
+            return;
+        }
+
+        if(ftouch(config_path) != 0) {
+            fprintf(stderr, "error: Failed to create file '%s'. Program will continue in a default state\n", config_path);
+        }
+
+        printf("Empty config file was created at: %s \n", config_path);
+        printf("Program will continue in a default state \n");
+
+        return;
+    }
 }
 
 void print_header() {
