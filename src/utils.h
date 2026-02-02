@@ -13,6 +13,7 @@
 void assert(bool condition, char* error);
 void asset_str_eq(char* str_a, char* str_b);
 
+void flush_stdin();
 bool confirm(char* message);
 
 void sleep_ms(unsigned long ms);

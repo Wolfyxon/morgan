@@ -17,11 +17,17 @@ void asset_str_eq(char* str_a, char* str_b) {
     }
 }
 
+void flush_stdin() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 bool confirm(char* message) {
     printf("%s [Y/N]: ", message);
+    fflush(stdout);
+    
     char inp = getc(stdin);
-
-    fflush(stdin);
+    flush_stdin();
 
     return inp == 'y' || inp == 'Y';
 }
