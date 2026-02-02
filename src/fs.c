@@ -38,3 +38,11 @@ char* freadstr(char* path) {
 bool fexists(char* path) {
     return access(path, 0) == 0;
 }
+
+int create_dir(char* path) {
+    #ifdef TARGET_WINDOWS
+    return !CreateDirectory(path, NULL);
+    #else
+    return mkdir(path, 0777);
+    #endif
+}

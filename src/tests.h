@@ -20,7 +20,7 @@ void run_tests();
 void test_test();
 void test_trim();
 void test_fexists();
-void test_mkdir();
+void test_create_dir();
 void test_rmdir();
 void test_config_slice();
 void test_config_entry();

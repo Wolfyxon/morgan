@@ -8,7 +8,7 @@ void run_tests() {
     run_test(test_test);
     run_test(test_trim);
     run_test(test_fexists);
-    run_test(test_mkdir);
+    run_test(test_create_dir);
     run_test(test_rmdir);
     run_test(test_config_slice);
     run_test(test_config_entry);
@@ -38,14 +38,14 @@ void test_fexists() {
     assert(fexists("src"), "'src' dir detected as nonexistent");
 }
 
-void test_mkdir() {
+void test_create_dir() {
     if(fexists("temp")) {
         fprintf(stderr, "warning: 'temp' already exists. Running test_rmdir() to remove it\n");
         test_rmdir();
     }
 
-    assert(mkdir("temp", MKDIR_MODE) == 0, "Failed to create dir 'temp'");
-    assert(fexists("temp"), "mkdir() returned success but 'temp' does not exist");
+    assert(create_dir("temp") == 0, "Failed to create dir 'temp'");
+    assert(fexists("temp"), "create_dir() returned success but 'temp' does not exist");
 }
 
 void test_rmdir() {
