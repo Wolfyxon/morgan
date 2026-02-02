@@ -46,6 +46,22 @@ int strfind(char* string, char* search) {
     return -1;
 }
 
+bool strisnum(char* string) {
+    size_t len = strlen(string);
+
+    if(len == 0) {
+        return false;
+    }
+
+    for(size_t i = 0; i < len; i++) {
+        if(!isdigit(string[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 char* strremovechar(char* string, char char_to_remove) {
     size_t len = strlen(string);
     size_t new_len = 0;
