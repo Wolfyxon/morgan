@@ -1,0 +1,11 @@
+name: Build and run tests
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install packages
+      run: sudo apt install -y gcc-mingw-w64-x86-64 make wine
+    - name: Build and test
+      run: make test-all
