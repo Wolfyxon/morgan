@@ -19,8 +19,12 @@ int main(int argc, char** argv) {
 
     print_header();
 
-    if(!fexists(config_path)) {
-        setup_wizard(config_path);
+    if(cmdline_options.run_setup || !fexists(config_path)) {
+        setup_wizard(config_path, !cmdline_options.run_setup);
+
+        if(cmdline_options.run_setup) {
+            return 0;
+        }
     }
 
     start();
@@ -57,6 +61,11 @@ CmdlineOptions process_args(int argc, char** argv) {
             exit(0);
         }
 
+        if(strcmp(arg, "--setup") == 0 || strcmp(arg, "-s") == 0) {
+            res.run_setup = true;
+            continue;
+        }
+
         fprintf(stderr, "error: Unrecognized argument '%s'\n", arg);
         print_help();
         exit(1);
@@ -65,10 +74,10 @@ CmdlineOptions process_args(int argc, char** argv) {
     return res;
 }
 
-void setup_wizard(char* config_path) {
+void setup_wizard(char* config_path, bool ask) {
     char* config_dir = config_get_dir();
 
-    if(!confirm("Would you like to run the configuration wizard?")) {
+    if(ask && !confirm("Would you like to run the configuration wizard?")) {
         if(create_dir(config_dir) != 0) {
             fprintf(stderr, "error: Failed to create directory '%s'. Program will continue in default state. \n", config_dir);
             return;
@@ -150,7 +159,8 @@ void print_help() {
     printf("Options: \n");
     printf("    -h, --help        Displays help. \n");
     printf("    -c, --config      Specifies the config file path. \n");
-    printf("    -k, --keyboards   Lists detected keyboards\n");
+    printf("    -k, --keyboards   Lists detected keyboards.\n");
+    printf("    -s, --setup       Runs the configuration wizard and exits.\n");
 }
 
 void start() {

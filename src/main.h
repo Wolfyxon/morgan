@@ -9,11 +9,12 @@
 
 typedef struct {
     char* config_path;
+    bool run_setup;
 } CmdlineOptions;
 
 int main(int argc, char** argv);
 CmdlineOptions process_args(int argc, char** argv);
-void setup_wizard(char* config_path);
+void setup_wizard(char* config_path, bool ask);
 void print_header();
 void print_help();
 void start();
