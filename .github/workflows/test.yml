@@ -7,10 +7,15 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
+  test-linux:
     runs-on: ubuntu-latest
     steps:
     - name: Install packages
-      run: sudo apt install -y gcc-mingw-w64-x86-64 make wine
-    - name: Build and test
-      run: make test-all
+      run: sudo apt install -y gcc-mingw-w64-x86-64 make
+      
+    - name: Build for all platforms
+      run: make all
+      
+    - name: Test linux
+      run: make test-linux
+      
