@@ -12,30 +12,43 @@ SRC_WINDOWS := $(SRC_ROOT)/windows
 SRC_LINUX := $(SRC_ROOT)/linux
 
 # Flags
-CFLAGS := -Wall
+CFLAGS_GLOBAL := -Wall
 CFLAGS_LINUX := -lX11 -lXi -lasound
 CFLAGS_WINDOWS := -lwinmm
 
-# --- Current config --- #
-# Uncomment one to compile for the platform. 
-# TODO: Make it work by for example `make linux` and `make windows`
-# - Windows -
-#CC := $(CC_WINDOWS_64)
-#SRC_PLATFORM := $(SRC_WINDOWS)
-#CFLAGS_PLATFORM := $(CFLAGS_WINDOWS)
+ifeq ($(OS),Windows_NT) # 'OS' is a default env variable on windows
+	DETECTED_OS := windows
+else
+	UNAME := $(shell uname)
 
-# - Linux -
-CC := $(CC_LINUX)
-SRC_PLATFORM := $(SRC_LINUX)
-CFLAGS_PLATFORM := $(CFLAGS_LINUX)
+	ifeq ($(UNAME),Linux)
+		DETECTED_OS := linux
+	else
+		$(error Unsupported OS: $(UNAME))
+	endif
+endif
 
-# --- Processed --- #
-SRC_FILES := $(shell find $(SRC_GLOBAL) $(SRC_PLATFORM) -maxdepth 1 -name \*.c -o -name \*.h)
+.PHONY: linux-vars windows-vars linux windows build all run clean
+.DEFAULT_GOAL := build
 
-.PHONY: build run clean
+build: $(DETECTED_OS)
+linux: build-linux
+windows: build-windows
+all: linux windows
 
-build:
-	$(CC) $(SRC_FILES) $(CFLAGS) $(CFLAGS_PLATFORM) -o morgan
+linux-vars:
+	$(eval CC := $(CC_LINUX))
+	$(eval SRC_PLATFORM := $(SRC_LINUX))
+	$(eval CFLAGS_PLATFORM := $(CFLAGS_LINUX))
+
+windows-vars:
+	$(eval CC := $(CC_WINDOWS_64))
+	$(eval SRC_PLATFORM := $(SRC_WINDOWS))
+	$(eval CFLAGS_PLATFORM := $(CFLAGS_WINDOWS))
+
+build-%: %-vars
+	$(eval SRC_FILES := $(shell find $(SRC_GLOBAL) $(SRC_PLATFORM) -maxdepth 1 -name \*.c -o -name \*.h))
+	$(CC) $(SRC_FILES) $(CFLAGS_PLATFORM) -o morgan
 
 run: build
 	./morgan
