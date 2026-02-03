@@ -174,6 +174,7 @@ void start() {
     printf("Ready!\n");
     printf("Select the \"Morgan MIDI\" input port in your DAW.\n");
     
+    input_flush();
     main_loop();
 }
 
