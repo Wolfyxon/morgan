@@ -6,7 +6,7 @@ void input_init() {
 }
 
 void input_flush() {
-    
+    win_flush_input();
 }
 
 Keyboard* input_get_keyboards(int* length) {

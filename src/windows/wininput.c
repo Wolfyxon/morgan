@@ -97,6 +97,12 @@ KeyEvent win_poll_key_event() {
     return event;
 }
 
+void win_flush_input() {
+    while(key_event_queue_start != key_event_queue_end) {
+        win_poll_key_event();
+    }
+}
+
 void win_init() {
     HWND window = win_create_window();
 

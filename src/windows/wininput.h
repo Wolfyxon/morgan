@@ -14,6 +14,7 @@ void win_init();
 void win_push_key_event(KeyEvent event);
 void win_flush_events();
 KeyEvent win_poll_key_event();
+void win_flush_input();
 PRAWINPUTDEVICELIST win_get_input_devices(int* length);
 Keyboard* win_get_keyboards(int* length);
 Key win_input_to_key(int code);
