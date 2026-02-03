@@ -12,6 +12,7 @@ HWND win_create_window();
 
 void win_init();
 void win_push_key_event(KeyEvent event);
+void win_flush_events();
 KeyEvent win_poll_key_event();
 PRAWINPUTDEVICELIST win_get_input_devices(int* length);
 Keyboard* win_get_keyboards(int* length);

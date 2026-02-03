@@ -75,13 +75,17 @@ void win_push_key_event(KeyEvent event) {
     key_event_queue_start = next;
 }
 
-KeyEvent win_poll_key_event() {
+void win_flush_events() {
     MSG msg;
     
     while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
+}
+
+KeyEvent win_poll_key_event() {
+    win_flush_events();
     
     if(key_event_queue_start == key_event_queue_end) {
         return KEY_EVENT_NONE;
