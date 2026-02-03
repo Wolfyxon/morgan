@@ -5,7 +5,9 @@
 #include "config.h"
 #include "fs.h"
 
-#define ENABLE_TESTS
+// Passed to gcc via -D<name>
+//#define ENABLE_TESTS
+//#define TESTS_ONLY
 
 void run_tests();
 

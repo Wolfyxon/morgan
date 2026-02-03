@@ -18,6 +18,7 @@ CFLAGS_WINDOWS := -lwinmm
 
 ifeq ($(OS),Windows_NT) # 'OS' is a default env variable on windows
 	DETECTED_OS := windows
+	COMPATIBILITY_PREFIX := "wine "
 else
 	UNAME := $(shell uname)
 
@@ -28,12 +29,14 @@ else
 	endif
 endif
 
-.PHONY: linux-vars windows-vars linux windows build all run clean
+.PHONY: linux-vars windows-vars linux windows test-windows test-linux test build all run clean
 .DEFAULT_GOAL := build
 
 build: $(DETECTED_OS)
+test: test-$(DETECTED_OS)
 linux: build-linux
 windows: build-windows
+test-all: test-linux test-windows
 all: linux windows
 
 linux-vars:
@@ -48,7 +51,15 @@ windows-vars:
 
 build-%: %-vars
 	$(eval SRC_FILES := $(shell find $(SRC_GLOBAL) $(SRC_PLATFORM) -maxdepth 1 -name \*.c -o -name \*.h))
-	$(CC) $(SRC_FILES) $(CFLAGS_PLATFORM) -o morgan
+	$(CC) $(SRC_FILES) $(CFLAGS_PLATFORM) $(CFLAGS_GLOBAL) $(CFLAGS_EXTRA) -o morgan
+
+test-linux:
+	CFLAGS_EXTRA="-DENABLE_TESTS -DTESTS_ONLY" make linux
+	./morgan
+
+test-windows:
+	CFLAGS_EXTRA="-DENABLE_TESTS -DTESTS_ONLY" make windows
+	$(COMPATIBILITY_PREFIX)./morgan.exe
 
 run: build
 	./morgan

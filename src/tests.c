@@ -16,6 +16,10 @@ void run_tests() {
     
     printf("==== ALL TESTS PASSED ====\n");
 
+    #ifdef TESTS_ONLY
+    exit(0);
+    #endif
+
     #endif
 }
 
