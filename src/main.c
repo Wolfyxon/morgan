@@ -85,6 +85,11 @@ void setup_wizard(char* config_path) {
         return;
     }
 
+    if(create_dir(config_dir) != 0) {
+        fprintf(stderr, "error: Failed to create directory '%s' \n", config_dir);
+        return;
+    }
+
     FILE* file = fopen(config_path, "w");
 
     if(file == NULL) {
