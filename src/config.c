@@ -208,6 +208,7 @@ char* config_get_value(char* config_string, char* section, char* key) {
             
             strcpy(res, entry->value);
             config_free_entry(entry);
+            free(section_slice);
 
             return res;
         }
