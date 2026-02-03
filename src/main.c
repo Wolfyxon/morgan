@@ -154,7 +154,9 @@ void print_header() {
 }
 
 void print_help() {
-    printf("Usage: morgan [-h | --help] [--config <path> | -c <path>] \n\n");
+    printf("Usage: morgan [-h | --help] [-c <path> | --config <path>] \n");
+    printf("              [-k | --keyboards] | [-s | --setup] \n");
+    printf("\n");
     
     printf("Options: \n");
     printf("    -h, --help        Displays help. \n");
