@@ -220,3 +220,44 @@ char* config_get_value(char* config_string, char* section, char* key) {
     free(section_slice);
     return NULL;
 }
+
+char** config_get_sections(char* config_string, size_t* len_ptr) {
+    char* line = strtok(config_string, "\n");
+    char** res = checked_malloc(0, "config section list");
+
+    while(line != NULL) {
+        size_t line_len = strlen(line);
+
+        if(line_len > 2) {
+            char first_char = line[0];
+            char last_char = line[line_len - 1];
+
+            if(first_char == '[' && last_char == ']') {
+                char* section = checked_malloc(line_len - 1, "section name buffer");
+                strncpy(section, line + 1, line_len - 1);
+
+                checked_realloc(res, *len_ptr++, "config section list");
+                res[*len_ptr] = section;
+            }
+        }
+
+        line = strtok(NULL, "\n");
+    }
+
+    return res;
+}
+
+void config_free_section_list(char** sections, size_t len) {
+    for(size_t i = 0; i < len; i++) {
+        free(sections[i]);
+    }
+
+    free(sections);
+}
+
+KeyboardConfig* config_get_keyboards(char* config_string, size_t* len_ptr) {
+    size_t sections_len = 0;
+    char** sections = config_get_sections(config_string, &sections_len);
+    
+    config_free_section_list(sections, sections_len);
+}

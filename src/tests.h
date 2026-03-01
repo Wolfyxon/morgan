@@ -26,5 +26,6 @@ void test_rmdir();
 void test_config_slice();
 void test_config_entry();
 void test_config_get_value();
+void test_config_get_sections();
 
 #endif
