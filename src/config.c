@@ -231,17 +231,18 @@ char** config_get_sections(char* config_string, size_t* len_ptr) {
     
     while(line != NULL) {
         size_t line_len = strlen(line);
-        
+
         if(line_len > 2) {
             char first_char = line[0];
-            char last_char = line[line_len - 1];
+            char last_char = line[line_len - 2];
 
             if(first_char == '[' && last_char == ']') {
                 char* section = checked_malloc(line_len - 1, "section name buffer");
                 strncpy(section, line + 1, line_len - 1);
 
-                checked_realloc(res, *len_ptr++, "config section list");
-                res[*len_ptr] = section;
+                *len_ptr += 1;
+                res = checked_realloc(res, (*len_ptr) * sizeof(char*), "config section list");
+                res[*len_ptr - 1] = section;
             }
         }
 
