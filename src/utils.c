@@ -37,6 +37,26 @@ int input_int(char* message) {
     }
 }
 
+bool is_flag(char* arg, char* flag) {
+    size_t arg_len = strlen(arg);
+    size_t flag_len = strlen(flag);
+    
+    // --flag
+    if(arg_len == 2) {
+        char flag_short_prefixed[3];
+        sprintf(flag_short_prefixed, "-%c", *flag);
+
+        return streq(arg, flag_short_prefixed);
+    }
+    // -f
+    else {
+        char flag_prefixed[flag_len + 3];
+        sprintf(flag_prefixed, "--%s", flag);
+
+        return streq(arg, flag_prefixed);
+    }
+}
+
 bool confirm(char* message) {
     printf("%s [Y/N]: ", message);
     fflush(stdout);

@@ -38,13 +38,13 @@ CmdlineOptions process_args(int argc, char** argv) {
     for(size_t i = 1; i < argc; i++) {
         char* arg = argv[i];
         
-        if(strcmp(arg, "--help") == 0 || strcmp(arg, "-h") == 0) {
+        if(is_flag(arg, "help")) {
             print_header();
             print_help();
             exit(0);
         }
 
-        if(strcmp(arg, "--config") == 0 || strcmp(arg, "-c") == 0) {
+        if(is_flag(arg, "config")) {
             if(i + 1 < argc) {
                 res.config_path = argv[i + 1];
                 i++;
@@ -55,13 +55,13 @@ CmdlineOptions process_args(int argc, char** argv) {
             }
         }
 
-        if(strcmp(arg, "--keyboards") == 0 || strcmp(arg, "-k") == 0) {
+        if(is_flag(arg, "keyboards")) {
             input_init();
             list_keyboards();
             exit(0);
         }
 
-        if(strcmp(arg, "--setup") == 0 || strcmp(arg, "-s") == 0) {
+        if(is_flag(arg, "setup")) {
             res.run_setup = true;
             continue;
         }
