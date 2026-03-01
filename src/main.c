@@ -27,8 +27,8 @@ int main(int argc, char** argv) {
         }
     }
 
-    char* config_str = config_read_file(cmdline_options.config_path);
-    
+    char* config_str = config_read_file(config_path);
+        
     size_t keyboards_len = 0;
     KeyboardData* keyboards = prepare_keyboards_from_config(config_str, &keyboards_len);
 
