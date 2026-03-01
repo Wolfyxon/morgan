@@ -7,6 +7,7 @@
 #include "defines.h"
 #include "utils.h"
 #include "string_util.h"
+#include "fs.h"
 
 #define CONFIG_FOLDER "morgan"
 #define CONFIG_FILE "morgan.conf"
@@ -26,6 +27,7 @@ typedef struct {
 char* get_user_data_dir();
 char* config_get_dir();
 char* config_get_file_path();
+char* config_read_file(char* path);
 char* config_get_section_slice(char* config_string, char* section_name);
 ConfigEntry* config_get_entry(char* line);
 void config_free_entry(ConfigEntry* entry);

@@ -65,6 +65,23 @@ char* config_process_string(char* config_string) {
     return strtolf(config_string);
 }
 
+char* config_read_file(char* path) {
+    if(!fexists(path)) {
+        return NULL;
+    }
+
+    char* file_buf = freadstr(path);
+
+    if(file_buf == NULL) {
+        return NULL;
+    }
+
+    char* res_buf = config_process_string(file_buf);
+
+    free(file_buf);
+    return res_buf;
+} 
+
 char* config_get_section_slice(char* config_string, char* section_name) {
     size_t header_len = strlen(section_name) + 2;
     char header_str[header_len + 1];
