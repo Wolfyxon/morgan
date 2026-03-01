@@ -225,7 +225,14 @@ void main_loop(KeyboardData* keyboards, size_t keyboards_len) {
             add_unconfigured_keyboard(key_ev.device, &keyboards, &keyboards_len);
         }
 
+        KeyboardData* kb = get_keyboard_data(key_ev.device, keyboards, keyboards_len);
+
+        if(key_ev.pressed && is_key_pressed(kb, key_ev.key)) {
+            continue;
+        }
+
         printf("Key %d %d from %d \n", key_ev.key, key_ev.pressed, key_ev.device);
+        set_key_pressed(kb, key_ev.key, key_ev.pressed);
 
         int note = key_to_note(key_ev.key);
 
@@ -239,6 +246,32 @@ void main_loop(KeyboardData* keyboards, size_t keyboards_len) {
             midi_note_off(note, 50);
         }
     }
+}
+
+void set_key_pressed(KeyboardData* keyboard, Key key, bool pressed) {
+    // TODO: Do stuff with keyboard->pressed_keys_len to decrease iteration count
+    for(size_t i = 0; i < KEYBOARD_MAX_PRESSED_KEYS; i++) {
+        printf("%d ", keyboard->pressed_keys[i]);
+        if(pressed && keyboard->pressed_keys[i] == KEY_NONE) {
+            keyboard->pressed_keys[i] = key;
+            return;
+        }
+
+        if(!pressed && keyboard->pressed_keys[i] == key ) {
+            keyboard->pressed_keys[i] = KEY_NONE;
+            return;
+        }
+    }
+}
+
+bool is_key_pressed(KeyboardData* keyboard, Key key) {
+    for(size_t i = 0; i < KEYBOARD_MAX_PRESSED_KEYS; i++) {
+        if(keyboard->pressed_keys[i] == key) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void add_unconfigured_keyboard(int id, KeyboardData** array_ptr, size_t* len_ptr) {
