@@ -1,32 +1,30 @@
 #include "fs.h"
 
 char* freadstr(char* path) {
-    FILE* file = fopen(path, "r");
+    FILE* file = fopen(path, "rb");
     
     if(file == NULL) {
         return NULL;
     }
     
-    char* file_buf = malloc(0);
+    char* file_buf = NULL;
     size_t file_len = 0;
 
     char read_buf[64] = {0};
     size_t read_len = 0;
 
-    if(file_buf == NULL) {
+    /*if(file_buf == NULL) {
         fprintf(stderr, "error: Failed to allocate file buffer. \n");
         fclose(file);
         
         return NULL;
-    }
+    }*/
 
     while((read_len = fread(read_buf, 1, sizeof(read_buf), file)) > 0) {
-        file_buf = realloc(file_buf, file_len + 1);
+        file_buf = realloc(file_buf, file_len + read_len + 1);
 
         if(!file_buf) {
             fprintf(stderr, "error: Failed to extend file buffer. \n");
-
-            free(file_buf);
             fclose(file);
 
             return NULL;
@@ -39,9 +37,9 @@ char* freadstr(char* path) {
     fclose(file);
 
     if(file_len != 0) {
-        file_buf[file_len - 1] = '\0';
+        file_buf[file_len] = '\0';
     }
-    
+
     return file_buf;
 }
 

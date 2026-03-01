@@ -60,7 +60,9 @@ KeyboardData* prepare_keyboards_from_config(char* config_string, size_t* len_ptr
         keyboards[i] = kb;
     }
 
+    *len_ptr = keyboard_configs_len;
     free(keyboard_configs);
+
     return keyboards;
 }
 
