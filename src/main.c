@@ -218,6 +218,11 @@ void main_loop(KeyboardData* keyboards, size_t keyboards_len) {
             continue;
         }
 
+        if(get_keyboard_data(key_ev.device, keyboards, keyboards_len) == NULL) {
+            printf("Keyboard %d is not in the config!\n", key_ev.device);
+            add_unconfigured_keyboard(key_ev.device, &keyboards, &keyboards_len);
+        }
+
         printf("Key %d %d from %d \n", key_ev.key, key_ev.pressed, key_ev.device);
 
         int note = key_to_note(key_ev.key);
@@ -234,10 +239,17 @@ void main_loop(KeyboardData* keyboards, size_t keyboards_len) {
     }
 }
 
-void add_keyboard(KeyboardData keyboard_data, KeyboardData** array_ptr, size_t* len_ptr) {
+void add_unconfigured_keyboard(int id, KeyboardData** array_ptr, size_t* len_ptr) {
+    KeyboardData kb = {
+        .id = id,
+        .octave_offset = DEFAULT_OCTAVE,
+        .pressed_keys = {KEY_NONE},
+        .pressed_keys_len = 0
+    };
+
     *len_ptr += 1;
     *array_ptr = checked_realloc(*array_ptr, *len_ptr, "keyboard list");
-    *array_ptr[*len_ptr - 1] = keyboard_data;
+    *array_ptr[*len_ptr - 1] = kb;
 }
 
 KeyboardData* get_keyboard_data(int id, KeyboardData* keyboards, size_t len) {

@@ -29,6 +29,6 @@ void print_header();
 void print_help();
 void start(KeyboardData* keyboards, size_t keyboards_len);
 void main_loop(KeyboardData* keyboards, size_t keyboards_len);
-void add_keyboard(KeyboardData keyboard_data, KeyboardData** array_ptr, size_t* len_ptr);
+void add_unconfigured_keyboard(int id, KeyboardData** array_ptr, size_t* len_ptr);
 KeyboardData* get_keyboard_data(int id, KeyboardData* keyboards, size_t len);
 void list_keyboards();
