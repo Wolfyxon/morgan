@@ -264,5 +264,43 @@ KeyboardConfig* config_get_keyboards(char* config_string, size_t* len_ptr) {
     size_t sections_len = 0;
     char** sections = config_get_sections(config_string, &sections_len);
     
+    KeyboardConfig* res = checked_malloc(0, "keyboard config list");
+    size_t prefix_len = strlen(KEYBOARD_SECTION_PREFIX);
+
+    for(size_t i = 0; i < sections_len; i++) {
+        char* section = sections[i];
+        size_t section_len = strlen(section);
+
+        if(strncmp(section, KEYBOARD_SECTION_PREFIX, prefix_len) != 0) {
+            continue;
+        }
+
+        if(section_len <= prefix_len) {
+            fprintf(stderr, "error: Invalid keyboard format '%s'. Missing keyboard ID.\n", section);
+            continue;
+        }
+
+        char* id_string = section + prefix_len;
+
+        if(!strisnum(id_string)) {
+            fprintf(stderr, "error: Invalid keyboard format: '%s'. '%s' is not a valid number.\n", section, id_string);
+            continue;
+        }
+        
+        int id = atoi(id_string);
+        
+        KeyboardConfig kb = {
+            .id = id,
+            .octave = DEFAULT_OCTAVE
+        };
+
+        // TODO: Parse octave
+
+        *len_ptr += 1;
+        res = checked_realloc(res, *len_ptr * sizeof(KeyboardConfig), "keyboard config list");
+        res[*len_ptr - 1] = kb;
+    }
+
     config_free_section_list(sections, sections_len);
+    return res;
 }

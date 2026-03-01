@@ -11,6 +11,8 @@
 #define CONFIG_FOLDER "morgan"
 #define CONFIG_FILE "morgan.conf"
 
+#define KEYBOARD_SECTION_PREFIX "keyboard_" 
+
 typedef struct {
     char* key;
     char* value;

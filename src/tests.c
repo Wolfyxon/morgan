@@ -1,5 +1,5 @@
 #include "tests.h"
-
+#define ENABLE_TESTS
 void run_tests() {
     #ifdef ENABLE_TESTS
 
@@ -14,6 +14,7 @@ void run_tests() {
     run_test(test_config_entry);
     run_test(test_config_get_value);
     run_test(test_config_get_sections);
+    run_test(test_config_get_keyboards);
     
     printf("==== ALL TESTS PASSED ====\n");
 
@@ -59,6 +60,7 @@ void test_rmdir() {
 }
 
 #define EXAMPLE_CONFIG "[test_section]\nhello = hi\nhi = 2\n[other_section]\nsomething = 123"
+#define EXAMPLE_KEYBOARDS "[keyboard_001]\noctave = 1 \n[keyboard_2]\noctave = 1\n"
 
 void test_config_slice() {
     asset_str_eq(
@@ -133,6 +135,19 @@ void test_config_get_sections() {
     asset_str_eq(sections[1], "other_section");
     
     config_free_section_list(sections, len);
+}
+
+void test_config_get_keyboards() {
+    size_t len = 0;
+    KeyboardConfig* kbs = config_get_keyboards(EXAMPLE_KEYBOARDS, &len);
+
+    if(len != 2) {
+        fprintf(stderr, "Expected len 2, got %ld\n", len);
+        exit(1);
+    }
+
+    assert(kbs[0].id == 1, "Unexpected ID of keyboard 1");
+    assert(kbs[1].id == 2, "Unexpected ID of keyboard 2");
 }
 
 #endif
