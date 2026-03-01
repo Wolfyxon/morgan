@@ -1,5 +1,5 @@
 #include "tests.h"
-#define ENABLE_TESTS
+
 void run_tests() {
     #ifdef ENABLE_TESTS
 
