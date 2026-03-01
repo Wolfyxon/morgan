@@ -60,16 +60,16 @@ void test_rmdir() {
     assert(!fexists("temp"), "rmdir() returned success but 'temp' still exists");
 }
 
-char* example_config = "[test_section]\nhello = hi\nhi = 2\n[other_section]\nsomething = 123";
+#define EXAMPLE_CONFIG "[test_section]\nhello = hi\nhi = 2\n[other_section]\nsomething = 123"
 
 void test_config_slice() {
     asset_str_eq(
-        config_get_section_slice(example_config, "test_section"), 
+        config_get_section_slice(EXAMPLE_CONFIG, "test_section"), 
         "\nhello = hi\nhi = 2\n"
     );
 
     asset_str_eq(
-        config_get_section_slice(example_config, "other_section"), 
+        config_get_section_slice(EXAMPLE_CONFIG, "other_section"), 
         "\nsomething = 123"
     );
 }
@@ -117,14 +117,14 @@ void test_config_entry() {
 }
 
 void test_config_get_value() {
-    asset_str_eq(config_get_value(example_config, "test_section", "hello"), "hi");
-    asset_str_eq(config_get_value(example_config, "test_section", "hi"), "2");
-    asset_str_eq(config_get_value(example_config, "other_section", "something"), "123");
+    asset_str_eq(config_get_value(EXAMPLE_CONFIG, "test_section", "hello"), "hi");
+    asset_str_eq(config_get_value(EXAMPLE_CONFIG, "test_section", "hi"), "2");
+    asset_str_eq(config_get_value(EXAMPLE_CONFIG, "other_section", "something"), "123");
 }
 
 void test_config_get_sections() {
     size_t len = 0;
-    char** sections = config_get_sections(example_config, &len);
+    char** sections = config_get_sections(EXAMPLE_CONFIG, &len);
 
     if(len != 2) {
         fprintf(stderr, "Expected len 2 got %ld\n", len);
