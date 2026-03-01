@@ -15,7 +15,10 @@ char* freadstr(char* path) {
 
     if(file_buf == NULL) {
         fprintf(stderr, "error: Failed to allocate file buffer. \n");
+        
+        free(file_buf);
         fclose(file);
+        
         return NULL;
     }
 
