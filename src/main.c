@@ -27,9 +27,41 @@ int main(int argc, char** argv) {
         }
     }
 
-    start();
+    char* config_str = config_read_file(cmdline_options.config_path);
+    
+    size_t keyboards_len = 0;
+    KeyboardData* keyboards = prepare_keyboards_from_config(config_str, &keyboards_len);
+
+    start(keyboards, keyboards_len);
     
     return 0;
+}
+
+KeyboardData* prepare_keyboards_from_config(char* config_string, size_t* len_ptr) {
+    if(config_string == NULL) {
+        return NULL;
+    }
+
+    size_t keyboard_configs_len = 0;
+    KeyboardConfig* keyboard_configs = config_get_keyboards(config_string, &keyboard_configs_len);
+
+    KeyboardData* keyboards = checked_malloc(keyboard_configs_len * sizeof(KeyboardData), "keyboard data list");
+
+    for(size_t i = 0; i < keyboard_configs_len; i++) {
+        KeyboardConfig conf = keyboard_configs[i];
+        
+        KeyboardData kb = {
+            .id = conf.id,
+            .octave_offset = conf.octave,
+            .pressed_keys = {KEY_NONE},
+            .pressed_keys_len = 0
+        };
+
+        keyboards[i] = kb;
+    }
+
+    free(keyboard_configs);
+    return keyboards;
 }
 
 CmdlineOptions process_args(int argc, char** argv) {
@@ -165,7 +197,7 @@ void print_help() {
     printf("    -s, --setup       Runs the configuration wizard and exits.\n");
 }
 
-void start() {
+void start(KeyboardData* keyboards, size_t keyboards_len) {
     printf("Starting...\n");
     
     input_init();
@@ -175,10 +207,10 @@ void start() {
     printf("Select the \"Morgan MIDI\" input port in your DAW.\n");
     
     input_flush();
-    main_loop();
+    main_loop(keyboards, keyboards_len);
 }
 
-void main_loop() {
+void main_loop(KeyboardData* keyboards, size_t keyboards_len) {
      while(1) {
         KeyEvent key_ev = input_poll_event();
 
@@ -200,6 +232,22 @@ void main_loop() {
             midi_note_off(note, 50);
         }
     }
+}
+
+void add_keyboard(KeyboardData keyboard_data, KeyboardData** array_ptr, size_t* len_ptr) {
+    *len_ptr += 1;
+    *array_ptr = checked_realloc(*array_ptr, *len_ptr, "keyboard list");
+    *array_ptr[*len_ptr - 1] = keyboard_data;
+}
+
+KeyboardData* get_keyboard_data(int id, KeyboardData* keyboards, size_t len) {
+    for(size_t i = 0; i < len; i++) {
+        if(keyboards[i].id == id) {
+            return &keyboards[i];
+        }
+    }
+
+    return NULL;
 }
 
 void list_keyboards() {
