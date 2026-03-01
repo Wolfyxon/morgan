@@ -222,12 +222,16 @@ char* config_get_value(char* config_string, char* section, char* key) {
 }
 
 char** config_get_sections(char* config_string, size_t* len_ptr) {
-    char* line = strtok(config_string, "\n");
-    char** res = checked_malloc(0, "config section list");
+    size_t len = strlen(config_string);
+    char string[len + 1];
+    strcpy(string, config_string);
 
+    char* line = strtok(string, "\n");
+    char** res = checked_malloc(0, "config section list");
+    
     while(line != NULL) {
         size_t line_len = strlen(line);
-
+        
         if(line_len > 2) {
             char first_char = line[0];
             char last_char = line[line_len - 1];
