@@ -62,6 +62,10 @@ bool strisnum(char* string) {
     return true;
 }
 
+bool streq(char* a, char* b) {
+    return strcmp(a, b) == 0;
+}
+
 char* strremovechar(char* string, char char_to_remove) {
     size_t len = strlen(string);
     size_t new_len = 0;
