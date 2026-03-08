@@ -15,7 +15,7 @@
 #endif
 
 void assert(bool condition, char* error);
-void asset_str_eq(char* str_a, char* str_b);
+void assert_str_eq(char* str_a, char* str_b);
 
 void flush_stdin();
 int input_int(char* message);

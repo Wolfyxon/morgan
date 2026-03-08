@@ -32,11 +32,11 @@ void test_test() {
 }
 
 void test_trim() {
-    asset_str_eq(strtrim(" "), "");
-    asset_str_eq(strtrim(""), "");
-    asset_str_eq(strtrim("hello "), "hello");
-    asset_str_eq(strtrim(" hi\n"), "hi");
-    asset_str_eq(strtrim(" abcdefg               \n"), "abcdefg");
+    assert_str_eq(strtrim(" "), "");
+    assert_str_eq(strtrim(""), "");
+    assert_str_eq(strtrim("hello "), "hello");
+    assert_str_eq(strtrim(" hi\n"), "hi");
+    assert_str_eq(strtrim(" abcdefg               \n"), "abcdefg");
 }
 
 void test_fexists() {
@@ -63,12 +63,12 @@ void test_rmdir() {
 #define EXAMPLE_KEYBOARDS "[keyboard_001]\noctave = 1 \n[keyboard_2]\noctave = 1\n"
 
 void test_config_slice() {
-    asset_str_eq(
+    assert_str_eq(
         config_get_section_slice(EXAMPLE_CONFIG, "test_section"), 
         "\nhello = hi\nhi = 2\n"
     );
 
-    asset_str_eq(
+    assert_str_eq(
         config_get_section_slice(EXAMPLE_CONFIG, "other_section"), 
         "\nsomething = 123"
     );
@@ -117,9 +117,9 @@ void test_config_entry() {
 }
 
 void test_config_get_value() {
-    asset_str_eq(config_get_value(EXAMPLE_CONFIG, "test_section", "hello"), "hi");
-    asset_str_eq(config_get_value(EXAMPLE_CONFIG, "test_section", "hi"), "2");
-    asset_str_eq(config_get_value(EXAMPLE_CONFIG, "other_section", "something"), "123");
+    assert_str_eq(config_get_value(EXAMPLE_CONFIG, "test_section", "hello"), "hi");
+    assert_str_eq(config_get_value(EXAMPLE_CONFIG, "test_section", "hi"), "2");
+    assert_str_eq(config_get_value(EXAMPLE_CONFIG, "other_section", "something"), "123");
 }
 
 void test_config_get_sections() {
@@ -131,8 +131,8 @@ void test_config_get_sections() {
         exit(1);
     }
 
-    asset_str_eq(sections[0], "test_section");
-    asset_str_eq(sections[1], "other_section");
+    assert_str_eq(sections[0], "test_section");
+    assert_str_eq(sections[1], "other_section");
     
     config_free_section_list(sections, len);
 }
