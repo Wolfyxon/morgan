@@ -254,9 +254,10 @@ char** config_get_sections(char* config_string, size_t* len_ptr) {
             char last_char = line[line_len - 1];
 
             if(first_char == '[' && last_char == ']') {
-                char* section = checked_malloc(line_len - 1, "section name buffer");
+                char* section = checked_malloc(line_len, "section name buffer");
                 strncpy(section, line + 1, line_len - 2);
-
+                section[line_len] = '\0';
+                
                 *len_ptr += 1;
                 res = checked_realloc(res, (*len_ptr) * sizeof(char*), "config section list");
                 res[*len_ptr - 1] = section;
