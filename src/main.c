@@ -235,8 +235,8 @@ void main_loop(KeyboardData* keyboards, size_t keyboards_len) {
 
         printf("Key %d %d from %d \n", key_ev.key, key_ev.pressed, key_ev.device);
         set_key_pressed(kb, key_ev.key, key_ev.pressed);
-
-        int note = key_to_note(key_ev.key);
+        
+        int note = offset_note(key_to_note(key_ev.key), kb->octave_offset);
 
         if(note == INVALID_NOTE) {
             continue;
