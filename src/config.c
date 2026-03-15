@@ -299,20 +299,27 @@ KeyboardConfig* config_get_keyboards(char* config_string, size_t* len_ptr) {
         }
 
         char* id_string = section + prefix_len;
+        char* octave_string = config_get_value(config_string, section, "octave");
 
         if(!strisnum(id_string)) {
             fprintf(stderr, "error: Invalid keyboard format: '%s'. '%s' is not a valid number.\n", section, id_string);
             continue;
         }
-        
-        int id = atoi(id_string);
+
+        if(octave_string == NULL || strlen(octave_string) == 0) {
+            fprintf(stderr, "error: Invalid '%s' config: Missing 'octave = <your octave number>'", section);
+            continue;
+        }
+
+        if(!strisnum(octave_string)) {
+            fprintf(stderr, "error: Invalid '%s' config: octave '%s' is not a valid number", section, octave_string);
+            continue;
+        }
         
         KeyboardConfig kb = {
-            .id = id,
-            .octave = DEFAULT_OCTAVE
+            .id = atoi(id_string),
+            .octave = atoi(octave_string)
         };
-
-        // TODO: Parse octave
 
         *len_ptr += 1;
         res = checked_realloc(res, *len_ptr * sizeof(KeyboardConfig), "keyboard config list");
