@@ -32,6 +32,8 @@ int main(int argc, char** argv) {
     size_t keyboards_len = 0;
     KeyboardData* keyboards = prepare_keyboards_from_config(config_str, &keyboards_len);
 
+    assert(keyboards != NULL, "prepare_keyboards_from_config() returned NULL");
+
     start(keyboards, keyboards_len);
     
     return 0;
@@ -283,8 +285,8 @@ void add_unconfigured_keyboard(int id, KeyboardData** array_ptr, size_t* len_ptr
     };
 
     *len_ptr += 1;
-    *array_ptr = checked_realloc(*array_ptr, *len_ptr, "keyboard list");
-    *array_ptr[*len_ptr - 1] = kb;
+    *array_ptr = checked_realloc(*array_ptr, sizeof(KeyboardData) * (*len_ptr), "keyboard list");
+    (*array_ptr)[*len_ptr - 1] = kb;
 }
 
 KeyboardData* get_keyboard_data(int id, KeyboardData* keyboards, size_t len) {
