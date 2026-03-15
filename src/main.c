@@ -34,9 +34,27 @@ int main(int argc, char** argv) {
 
     assert(keyboards != NULL, "prepare_keyboards_from_config() returned NULL");
 
+    print_keyboards(keyboards, keyboards_len);
     start(keyboards, keyboards_len);
     
     return 0;
+}
+
+void print_keyboards(KeyboardData* keyboards, size_t len) {
+    if(len == 0) {
+        return;
+    }
+
+    printf("Configured keyboards:\n");
+
+    for(size_t i = 0; i < len; i++) {
+        KeyboardData kb = keyboards[i];
+        printf("    [keyboard_%d]\n", kb.id);
+        printf("    octave offset: %d\n", kb.octave_offset);
+        printf("\n");
+    }
+
+    printf("\n");
 }
 
 KeyboardData* prepare_keyboards_from_config(char* config_string, size_t* len_ptr) {
