@@ -236,11 +236,13 @@ void main_loop(KeyboardData* keyboards, size_t keyboards_len) {
         printf("Key %d %d from %d \n", key_ev.key, key_ev.pressed, key_ev.device);
         set_key_pressed(kb, key_ev.key, key_ev.pressed);
         
-        int note = offset_note(key_to_note(key_ev.key), kb->octave_offset);
+        int base_note = key_to_note(key_ev.key);
 
-        if(note == INVALID_NOTE) {
+        if(base_note == INVALID_NOTE) {
             continue;
         }
+
+        int note = offset_note(base_note, kb->octave_offset);
 
         if(key_ev.pressed) {
             midi_note_on(note, 50);
