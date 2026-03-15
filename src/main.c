@@ -72,7 +72,7 @@ KeyboardData* prepare_keyboards_from_config(char* config_string, size_t* len_ptr
         
         KeyboardData kb = {
             .id = conf.id,
-            .octave_offset = conf.octave,
+            .octave_offset = DEFAULT_OCTAVE - conf.octave,
             .pressed_keys = {KEY_NONE},
             .pressed_keys_len = 0
         };
