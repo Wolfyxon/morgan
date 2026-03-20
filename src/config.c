@@ -4,8 +4,8 @@ char* get_user_data_dir() {
     #if defined(TARGET_WINDOWS)
         char* src = getenv("APPDATA");
 
-        if(strlen(src) == 0) {
-            fprintf(stderr, "error: Unable to get user config directory. %%APPDATA%% is not set.");
+        if(src == NULL) {
+            fprintf(stderr, "error: Unable to get user config directory. %%APPDATA%% is not set.\n");
             exit(1);
         }
 
@@ -23,8 +23,8 @@ char* get_user_data_dir() {
         char* home = getenv("HOME");
         char* suffix = "/.config";
 
-        if(strlen(home) == 0) {
-            fprintf(stderr, "error: Unable to get user config directory. HOME is not set.");
+        if(home == NULL) {
+            fprintf(stderr, "error: Unable to get user config directory. HOME is not set.\n");
             exit(1);
         }
 
