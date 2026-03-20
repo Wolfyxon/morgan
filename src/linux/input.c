@@ -3,7 +3,7 @@
 
 void input_init() {
     if(linux_get_session_type() != SESSION_X11) {
-        fprintf(stderr, "warning: Only Xorg is officially supported. You may run into issues.");
+        fprintf(stderr, "warning: Only Xorg is officially supported. You may run into issues.\n");
     }
 
     x11_init();
