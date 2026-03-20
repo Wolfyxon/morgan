@@ -56,3 +56,45 @@ You can view keyboard IDs by using
 morgan --keyboards
 ```
 
+## Building & testing
+Install `make` and `gcc`.
+
+### Your current platform
+Build
+```
+make
+```
+Test
+```
+make test
+```
+
+### Linux
+Build
+```
+make linux
+```
+Test
+```
+make test-linux
+```
+
+### Windows
+Build
+```
+make windows
+```
+Test (NOTE: If you're testing on Linux, you will need `wine`)
+```
+make test-windows
+```
+
+### All platforms
+Build
+```
+make all
+```
+Test
+```
+make test-all
+```
