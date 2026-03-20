@@ -7,7 +7,7 @@ SessionType linux_get_session_type() {
         fprintf(stderr, "error: XDG_SESSION_TYPE not detected. Morgan must be running under Xorg\n");
         exit(1);
     }
-    
+
     if(strcmp(session, "x11") == 0) {
         return SESSION_X11;
     }
@@ -16,6 +16,6 @@ SessionType linux_get_session_type() {
         return SESSION_WAYLAND;
     }
 
-    fprintf(stderr, "warning: Unknown XDG_SESSION_TYPE: %s", session);
+    fprintf(stderr, "warning: Unknown XDG_SESSION_TYPE: %s\n", session);
     return SESSION_UNKNOWN;
 }
