@@ -98,6 +98,11 @@ CmdlineOptions process_args(int argc, char** argv) {
             exit(0);
         }
 
+        if(is_flag(arg, "version")) {
+            printf("morgan %s\n", VERSION);
+            exit(0);
+        }
+
         if(is_flag(arg, "config")) {
             if(i + 1 < argc) {
                 res.config_path = argv[i + 1];
@@ -208,12 +213,13 @@ void print_header() {
 }
 
 void print_help() {
-    printf("Usage: morgan [-h | --help] [-c <path> | --config <path>] \n");
+    printf("Usage: morgan [-h | --help] [-v --version] [-c <path> | --config <path>] \n");
     printf("              [-k | --keyboards] | [-s | --setup] \n");
     printf("\n");
     
     printf("Options: \n");
     printf("    -h, --help        Displays help. \n");
+    printf("    -v, --version     Shows the current program version. \n");
     printf("    -c, --config      Specifies the config file path. \n");
     printf("    -k, --keyboards   Lists detected keyboards.\n");
     printf("    -s, --setup       Runs the configuration wizard and exits.\n");
