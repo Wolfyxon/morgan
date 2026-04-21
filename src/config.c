@@ -307,12 +307,12 @@ KeyboardConfig* config_get_keyboards(char* config_string, size_t* len_ptr) {
         }
 
         if(octave_string == NULL || strlen(octave_string) == 0) {
-            fprintf(stderr, "error: Invalid '%s' config: Missing 'octave = <your octave number>'", section);
+            fprintf(stderr, "error: Invalid '%s' config: Missing 'octave = <your octave number>'\n", section);
             continue;
         }
 
         if(!strisnum(octave_string)) {
-            fprintf(stderr, "error: Invalid '%s' config: octave '%s' is not a valid number", section, octave_string);
+            fprintf(stderr, "error: Invalid '%s' config: octave '%s' is not a valid number\n", section, octave_string);
             continue;
         }
         
