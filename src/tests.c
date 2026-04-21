@@ -46,6 +46,7 @@ void test_remove_char() {
     char* removed = strremovechar(str, '\n');
 
     assert_str_eq(removed, "hi there");
+    free(removed);
 }
 
 void test_crlf() {
