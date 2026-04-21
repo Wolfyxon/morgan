@@ -23,12 +23,12 @@ CFLAGS_WINDOWS := -lwinmm
 
 ifeq ($(OS),Windows_NT) # 'OS' is a default env variable on windows
 	DETECTED_OS := windows
-	COMPATIBILITY_PREFIX := "wine "
 else
 	UNAME := $(shell uname)
 
 	ifeq ($(UNAME),Linux)
 		DETECTED_OS := linux
+		COMPATIBILITY_PREFIX := "wine "
 	else
 		$(error Unsupported OS: $(UNAME))
 	endif
