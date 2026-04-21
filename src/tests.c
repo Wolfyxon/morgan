@@ -7,6 +7,7 @@ void run_tests() {
 
     run_test(test_test);
     run_test(test_trim);
+    run_test(test_remove_char);
     run_test(test_crlf);
     run_test(test_fexists);
     run_test(test_create_dir);
@@ -38,6 +39,13 @@ void test_trim() {
     assert_str_eq(strtrim("hello "), "hello");
     assert_str_eq(strtrim(" hi\n"), "hi");
     assert_str_eq(strtrim(" abcdefg               \n"), "abcdefg");
+}
+
+void test_remove_char() {
+    char* str = "hi \nthere";
+    char* removed = strremovechar(str, '\n');
+
+    assert_str_eq(removed, "hi there");
 }
 
 void test_crlf() {
