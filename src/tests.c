@@ -78,7 +78,7 @@ void test_rmdir() {
 }
 
 #define EXAMPLE_CONFIG "[test_section]\nhello = hi\nhi = 2\n[other_section]\nsomething = 123"
-#define EXAMPLE_KEYBOARDS "[keyboard_001]\r\noctave = 1 \r\n[keyboard_2]\r\noctave = 1\r\n"
+#define EXAMPLE_KEYBOARDS "[keyboard_001]\noctave = 1 \n[keyboard_2]\noctave = 1\n"
 
 void test_config_slice() {
     assert_str_eq(
