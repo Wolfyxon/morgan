@@ -24,7 +24,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
         if (raw->header.dwType == RIM_TYPEKEYBOARD) {
             #ifdef INPUT_DEBUG
-            printf("[windows] Key %u from device %p\n", raw->data.keyboard.VKey, raw->header.hDevice);
+            printf("[windows] Key %u from device %p flags: %u\n", raw->data.keyboard.VKey, raw->header.hDevice, raw->data.keyboard.Flags);
             #endif
 
             KeyEvent event = {
