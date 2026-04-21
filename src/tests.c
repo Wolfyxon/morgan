@@ -7,6 +7,7 @@ void run_tests() {
 
     run_test(test_test);
     run_test(test_trim);
+    run_test(test_crlf);
     run_test(test_fexists);
     run_test(test_create_dir);
     run_test(test_rmdir);
@@ -37,6 +38,14 @@ void test_trim() {
     assert_str_eq(strtrim("hello "), "hello");
     assert_str_eq(strtrim(" hi\n"), "hi");
     assert_str_eq(strtrim(" abcdefg               \n"), "abcdefg");
+}
+
+void test_crlf() {
+    char* crlf = "hello\r\nworld";
+    char* lf = strtolf(crlf);
+
+    assert_str_eq(lf, "hello\nworld");
+    free(lf);
 }
 
 void test_fexists() {

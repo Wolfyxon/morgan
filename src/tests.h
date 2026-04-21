@@ -20,6 +20,7 @@ void run_tests();
 
 void test_test();
 void test_trim();
+void test_crlf();
 void test_fexists();
 void test_create_dir();
 void test_rmdir();
