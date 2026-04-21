@@ -59,8 +59,8 @@ void test_rmdir() {
     assert(!fexists("temp"), "rmdir() returned success but 'temp' still exists");
 }
 
-#define EXAMPLE_CONFIG "[test_section]\r\nhello = hi\r\nhi = 2\r\n[other_section]\r\nsomething = 123"
-#define EXAMPLE_KEYBOARDS "[keyboard_001]\noctave = 1 \n[keyboard_2]\noctave = 1\n"
+#define EXAMPLE_CONFIG "[test_section]\nhello = hi\nhi = 2\n[other_section]\nsomething = 123"
+#define EXAMPLE_KEYBOARDS "[keyboard_001]\r\noctave = 1 \r\n[keyboard_2]\r\noctave = 1\r\n"
 
 void test_config_slice() {
     assert_str_eq(
