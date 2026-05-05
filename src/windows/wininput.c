@@ -3,8 +3,7 @@
 #define MAX_KEY_EVENTS 1024
 
 KeyEvent key_event_queue[MAX_KEY_EVENTS];
-size_t key_event_queue_start = 0;
-size_t key_event_queue_end = 0;
+size_t key_event_queue_len = 0;
 
 const KeyEvent KEY_EVENT_NONE = {
     .key = KEY_NONE,
@@ -24,7 +23,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
         if (raw->header.dwType == RIM_TYPEKEYBOARD) {
             #ifdef INPUT_DEBUG
-            printf("[windows] Key %u from device %p\n", raw->data.keyboard.VKey, raw->header.hDevice);
+
+            printf(
+                "[windows] Key %u from device %p flags: %u msg: %x\n", 
+                raw->data.keyboard.VKey, 
+                raw->header.hDevice, 
+                raw->data.keyboard.Flags,
+                raw->data.keyboard.Message
+            );
+
             #endif
 
             KeyEvent event = {
@@ -64,15 +71,13 @@ HWND win_create_window() {
 }
 
 void win_push_key_event(KeyEvent event) {
-    int next = (key_event_queue_start + 1) % MAX_KEY_EVENTS;
-
-    if(next == key_event_queue_end) {
+    if(key_event_queue_len >= MAX_KEY_EVENTS) {
         fprintf(stderr, "warning: Input queue full, event dropped");
         return;
     }
 
-    key_event_queue[next] = event;
-    key_event_queue_start = next;
+    key_event_queue[key_event_queue_len] = event;
+    key_event_queue_len += 1;
 }
 
 void win_flush_events() {
@@ -87,18 +92,18 @@ void win_flush_events() {
 KeyEvent win_poll_key_event() {
     win_flush_events();
     
-    if(key_event_queue_start == key_event_queue_end) {
+    if(key_event_queue_len == 0) {
         return KEY_EVENT_NONE;
     }
 
-    KeyEvent event = key_event_queue[key_event_queue_end];
-    key_event_queue_end = (key_event_queue_end + 1) % MAX_KEY_EVENTS;
+    KeyEvent event = key_event_queue[key_event_queue_len - 1];
+    key_event_queue_len -= 1;
 
     return event;
 }
 
 void win_flush_input() {
-    while(key_event_queue_start != key_event_queue_end) {
+    while(key_event_queue_len != 0) {
         win_poll_key_event();
     }
 }

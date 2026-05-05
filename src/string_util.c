@@ -79,7 +79,7 @@ char* strremovechar(char* string, char char_to_remove) {
 
     for(size_t i = 0; i < len; i++) {
         if(string[i] != char_to_remove) {
-            buf[i] = string[i];
+            buf[new_len] = string[i];
             new_len += 1;
         }
     }
@@ -90,6 +90,8 @@ char* strremovechar(char* string, char char_to_remove) {
         fprintf(stderr, "error: Failed to shrink string buffer");
         exit(1);
     }
+
+    buf[new_len] = '\0';
 
     return buf;
 }
